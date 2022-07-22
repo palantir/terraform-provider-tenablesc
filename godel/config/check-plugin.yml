@@ -1,0 +1,19 @@
+checks:
+  golint:
+    filters:
+      - value: "should have comment or be unexported"
+      - value: "or a comment on this block"
+  errcheck:
+    skip: true 
+    # Terraform provider code unfortunately is made of Set methods that return error, which is maddeningly silly.
+    # Skipping errcheck keeps the code more readable at the cost of cutting a teeth-grittingly useful safety line.
+    # I hate this, for the record.
+  govet:
+    filters:
+      - value: "Errorf call has error-wrapping directive"
+  outparamcheck:
+    exclude:
+      paths:
+        - provider.go
+
+

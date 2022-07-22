@@ -1,0 +1,8 @@
+out/*
+tf_test/.terraform/*
+tf_test/terraform-provider-sc
+tf_test/terraform.tfstate
+tf_test/terraform.tfstate.backup
+tf_test/crash.log
+.idea/
+dist/
