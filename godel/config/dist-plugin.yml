@@ -1,7 +1,7 @@
 products:
     terraform-provider-tenablesc:
         build:
-            main-pkg: tenablesc
+            main-pkg: .
             os-archs:
                 - os: darwin
                   arch: amd64
