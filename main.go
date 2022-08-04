@@ -16,7 +16,7 @@ package main
 
 import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/plugin"
-	"github.com/palantir/terraform-provider-tenablesc/provider"
+	"github.com/palantir/terraform-provider-tenablesc/internal/provider"
 )
 
 // Run "go generate" to format example terraform files and generate the docs for the registry/website
