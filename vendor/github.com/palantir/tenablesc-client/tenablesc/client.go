@@ -172,13 +172,11 @@ func (c *Client) patchResourceWithID(endpoint string, input interface{}, dest in
 
 	id, err := idFromStruct(input)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to retrieve ID from struct: %w", err)
 	}
 	endpoint = fmt.Sprintf("%s/%s", endpoint, id)
 
-	req := c.client.NewRequest().SetBody(input)
-
-	return c.patchResource(endpoint, req, dest)
+	return c.patchResource(endpoint, input, dest)
 }
 
 func (c *Client) deleteResource(endpoint string, input interface{}, dest interface{}) (*response, error) {

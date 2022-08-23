@@ -194,7 +194,7 @@ github.com/mitchellh/reflectwalk
 # github.com/oklog/run v1.0.0
 ## explicit
 github.com/oklog/run
-# github.com/palantir/tenablesc-client v0.1.0-rc1
+# github.com/palantir/tenablesc-client v0.1.0-rc2
 ## explicit; go 1.18
 github.com/palantir/tenablesc-client/tenablesc
 # github.com/posener/complete v1.2.3
