@@ -32,13 +32,32 @@ jobs:
         go-version-file: 'go.mod'
         cache: true
       id: go
-
     - name: Build
       run: |
         ./godelw build
 
+  verify:
+    name: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v3
+      with:
+        go-version-file: 'go.mod'
+        cache: true
+      id: go
+    - name: verify
+      run: |
+        ./godelw verify --apply=false
+
   generate:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-go@v3
@@ -51,50 +70,3 @@ jobs:
           git diff --compact-summary --exit-code || \
             (echo; echo "Unexpected difference in directories after code generation. Run './godelw generate' command and commit."; exit 1)
 
-  # run acceptance tests in a matrix with Terraform core versions
-  test:
-    name: Matrix Test
-    needs: build
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    strategy:
-      fail-fast: false
-      matrix:
-        # list whatever Terraform versions here you would like to support
-        terraform:
-          - '0.12.*'
-          - '0.13.*'
-          - '0.14.*'
-          - '0.15.*'
-          - '1.0.*'
-          - '1.1.*'
-    steps:
-
-    - name: Check out code into the Go module directory
-      uses: actions/checkout@v3
-
-    - name: Set up Go
-      uses: actions/setup-go@v3
-      with:
-        go-version-file: 'go.mod'
-        cache: true
-      id: go
-
-    - uses: hashicorp/setup-terraform@v2
-      with:
-        terraform_version: ${{ matrix.terraform }}
-        terraform_wrapper: false
-
-    - name: TF acceptance tests
-      timeout-minutes: 10
-      env:
-        TF_ACC: "1"
-
-        # Set whatever additional acceptance test env vars here. You can
-        # optionally use data from your repository secrets using the
-        # following syntax:
-        # SOME_VAR: ${{ secrets.SOME_VAR }}
-
-      run: |
-        ./godelw test
-        # Deserves some more interesting tests that actually invoke the binary pulled in to make sure terraform'll run it. 
