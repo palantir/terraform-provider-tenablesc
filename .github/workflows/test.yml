@@ -1,20 +1,8 @@
-# This GitHub action runs your tests for each commit push and/or PR. Optionally
-# you can turn it on using a cron schedule for regular testing.
-#
 name: Tests
 on:
   pull_request:
     paths-ignore:
       - 'README.md'
-  push:
-    paths-ignore:
-      - 'README.md'
-  # For systems with an upstream API that could drift unexpectedly (like most SaaS systems, etc.),
-  # we recommend testing at a regular interval not necessarily tied to code changes. This will 
-  # ensure you are alerted to something breaking due to an API change, even if the code did not
-  # change.
-  # schedule:
-  #   - cron: '0 13 * * *'
 jobs:
   # ensure the code builds...
   build:
