@@ -212,8 +212,6 @@ github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e/go.mod h1:zD1mROLA
 github.com/nsf/jsondiff v0.0.0-20200515183724-f29ed568f4ce h1:RPclfga2SEJmgMmz2k+Mg7cowZ8yv4Trqw9UsJby758=
 github.com/oklog/run v1.0.0 h1:Ru7dDtJNOyC66gQ5dQmaCa0qIsAUFY3sFpK1Xk8igrw=
 github.com/oklog/run v1.0.0/go.mod h1:dlhp/R75TPv97u0XWUtDeV/lRKWPKSdTuV0TZvrmrQA=
-github.com/palantir/tenablesc-client v0.1.0-rc1 h1:h8h0xhjIoBNZ+pJ8WAr/MkpaWkytUK4lRsKVAtgCKMQ=
-github.com/palantir/tenablesc-client v0.1.0-rc1/go.mod h1:HNsuuCbCwG5UQa1zbLbUG4BXf18Ubgzg22vYGiJM1dQ=
 github.com/palantir/tenablesc-client v0.1.0-rc2 h1:U14QFosww5KIaXfUgktuZd3P9R8Lp6PTe0B3pq+MYQY=
 github.com/palantir/tenablesc-client v0.1.0-rc2/go.mod h1:HNsuuCbCwG5UQa1zbLbUG4BXf18Ubgzg22vYGiJM1dQ=
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
