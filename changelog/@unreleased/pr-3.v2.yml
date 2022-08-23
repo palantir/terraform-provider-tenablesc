@@ -1,0 +1,5 @@
+type: fix
+fix:
+  description: uptake bugfix for patchResourceWithID
+  links:
+  - https://github.com/palantir/terraform-provider-tenablesc/pull/3
