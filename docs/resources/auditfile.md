@@ -17,18 +17,16 @@ Create and manage Audit Files.
 
 ### Required
 
+- `content` (String) Audit file content
 - `name` (String) Audit file Name as presented in SC
 
 ### Optional
 
-- `content` (String) Audit file content inline - only one of content or path may be provided
 - `description` (String) Audit File description
-- `path` (String) Path to audit file on disk - only one of content or path may be provided
 
 ### Read-Only
 
 - `id` (String) The ID of this resource.
 - `sc_filename` (String) Filename of audit file as stored in SC
-- `sha256_sum` (String) sha256 checksum of audit file as stored in SC
 
 

@@ -93,10 +93,8 @@ Requires Administrator (org=0) credentials.`
 	descriptionAssetType            = `Asset type - may be 'dnsname' or 'static'`
 	descriptionAssetValues          = `Asset values - must be either DNS names or IPs based on type of asset.`
 
-	descriptionAuditFilePath       = `Path to audit file on disk - only one of content or path may be provided`
-	descriptionAuditFileContent    = `Audit file content inline - only one of content or path may be provided`
+	descriptionAuditFileContent    = `Audit file content`
 	descriptionAuditFileSCFilename = `Filename of audit file as stored in SC`
-	descriptionAuditFileSHA256Sum  = `sha256 checksum of audit file as stored in SC`
 
 	descriptionRiskRuleHostType  = `Host Type may be 'all', 'ip', or 'asset'`
 	descriptionRiskRuleHostValue = `A list of values depending on the host type.
