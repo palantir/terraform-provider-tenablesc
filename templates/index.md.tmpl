@@ -14,7 +14,7 @@ Some resources require administrative tokens (for creating and managing orgs and
 
 {{ if .HasExample -}}
 ## Example Usage
-{{ printf "{{tffile %q}}" .ExampleFile }}
+{{tffile .ExampleFile}}
 {{- end }}
 
 {{ .SchemaMarkdown | trimspace }}
