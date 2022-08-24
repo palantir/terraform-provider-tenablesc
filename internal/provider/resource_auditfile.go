@@ -16,9 +16,6 @@ package provider
 
 import (
 	"context"
-	"crypto/sha256"
-	"encoding/hex"
-	"io/ioutil"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -50,81 +47,36 @@ func ResourceAuditFile() *schema.Resource {
 				Optional:    true,
 				Default:     descriptionDefaultDescriptionValue,
 			},
-			"path": {
-				Type:        schema.TypeString,
-				Description: descriptionAuditFilePath,
-				Optional:    true,
-			},
 			"content": {
 				Type:        schema.TypeString,
 				Description: descriptionAuditFileContent,
-				Optional:    true,
+				Required:    true,
 			},
 			"sc_filename": {
 				Type:        schema.TypeString,
 				Description: descriptionAuditFileSCFilename,
 				Computed:    true,
 			},
-			"sha256_sum": {
-				Type:        schema.TypeString,
-				Description: descriptionAuditFileSHA256Sum,
-				Computed:    true,
-				ForceNew:    true,
-			},
 		},
 	}
 }
 
-func sha256sum(bytes []byte) string {
-	shabuilder := sha256.New()
-	shabuilder.Write(bytes)
-	sum := hex.EncodeToString(shabuilder.Sum(nil))
-
-	return sum
-}
-func readLocalFile(path string) (content []byte, sum string, err error) {
-	content, err = ioutil.ReadFile(path)
-	if err != nil {
-		return
-	}
-
-	sum = sha256sum(content)
-	return
-}
 func resourceAuditFileCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
 
-	// upload the audit file if we need to
-	var content []byte
-	var sum string
 	var err error
-	var ok bool
-	var path string
 
 	name := d.Get("name").(string)
-	if path, ok = d.Get("path").(string); ok && path != "" {
-		content, sum, err = readLocalFile(path)
-		if err != nil {
-			return diag.FromErr(err)
-		}
-	} else if content, ok = d.Get("content").([]byte); ok && len(content) > 0 {
-		sum = sha256sum(content)
-	} else {
-		return diag.Diagnostics{{
-			Severity: diag.Error,
-			Summary:  "Audit file must either specify path or content.",
-		}}
-	}
+	content := d.Get("content").(string)
 
-	file, err := sc.UploadFileFromString(string(content), name, "")
+	filename, err := uploadNewAuditFile(sc, name, content)
 	if err != nil {
-		Logf(logError, "Upload file response: %+v ", file)
+		Logf(logError, "Upload file response: %+v ", err)
 		return diag.FromErr(err)
 	}
 
-	d.Set("sc_filename", file.Filename)
-	d.Set("sha256_sum", sum)
+	d.Set("sc_filename", filename)
 
 	response, err := sc.CreateAuditFile(buildAuditFileInput(d))
 	if err != nil {
@@ -142,13 +94,6 @@ func resourceAuditFileRead(ctx context.Context, d *schema.ResourceData, m interf
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
 
-	path := d.Get("path").(string)
-	_, sum, err := readLocalFile(path)
-	if err != nil {
-		return diag.FromErr(err)
-	}
-	d.Set("sha256_sum", sum)
-
 	auditFile, err := sc.GetAuditFile(d.Id())
 	if err != nil {
 		return handleNotFoundError(d, err)
@@ -164,15 +109,49 @@ func resourceAuditFileRead(ctx context.Context, d *schema.ResourceData, m interf
 	return nil
 }
 
+func uploadNewAuditFile(sc *tenablesc.Client, name, content string) (string, error) {
+	file, err := sc.UploadFileFromString(content, name, "auditfile")
+	if err != nil {
+		return "", err
+	}
+	return file.Filename, nil
+}
+
 func resourceAuditFileUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
+
+	oldFilename := d.Get("sc_filename").(string)
+	name := d.Get("name").(string)
+	content := d.Get("content").(string)
+	if d.HasChange("content") {
+		filename, err := uploadNewAuditFile(sc, name, content)
+		if err != nil {
+			return diag.FromErr(err)
+		}
+		d.Set("sc_filename", filename)
+	}
 
 	auditFile, err := sc.UpdateAuditFile(buildAuditFileInput(d))
 	if err != nil {
 		return diag.FromErr(err)
 	}
 
+	if d.HasChange("content") && d.HasChange("sc_filename") {
+		// Now that we've updated the audit file, including the new content,
+		// remove the old file for cleanliness, unless it's the same filename.
+		err := sc.DeleteFile(oldFilename)
+		if err != nil {
+			// If we can't delete the old file, shrug and move on, could be referred to elsewhere
+			return diag.Diagnostics{
+				{
+					Severity: diag.Warning,
+					Summary:  "Unable to delete old audit file, may still be in use.",
+					Detail:   err.Error(),
+				},
+			}
+		}
+	}
 	Logf(logDebug, "response: %+v", auditFile)
 
 	return resourceAuditFileRead(ctx, d, m)

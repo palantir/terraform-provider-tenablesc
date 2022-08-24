@@ -1,0 +1,5 @@
+type: fix
+fix:
+  description: Use 'content' only for auditfile, remove 'path' option.
+  links:
+  - https://github.com/palantir/terraform-provider-tenablesc/pull/6
