@@ -65,20 +65,18 @@ func resourceAuditFileCreate(ctx context.Context, d *schema.ResourceData, m inte
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
 
-	// upload the audit file if we need to
-	var content []byte
 	var err error
 
 	name := d.Get("name").(string)
-	content = d.Get("content").([]byte)
+	content := d.Get("content").(string)
 
-	file, err := sc.UploadFileFromString(string(content), name, "")
+	filename, err := uploadNewAuditFile(sc, name, content)
 	if err != nil {
-		Logf(logError, "Upload file response: %+v ", file)
+		Logf(logError, "Upload file response: %+v ", err)
 		return diag.FromErr(err)
 	}
 
-	d.Set("sc_filename", file.Filename)
+	d.Set("sc_filename", filename)
 
 	response, err := sc.CreateAuditFile(buildAuditFileInput(d))
 	if err != nil {
@@ -111,15 +109,49 @@ func resourceAuditFileRead(ctx context.Context, d *schema.ResourceData, m interf
 	return nil
 }
 
+func uploadNewAuditFile(sc *tenablesc.Client, name, content string) (string, error) {
+	file, err := sc.UploadFileFromString(content, name, "auditfile")
+	if err != nil {
+		return "", err
+	}
+	return file.Filename, nil
+}
+
 func resourceAuditFileUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
+
+	oldFilename := d.Get("sc_filename").(string)
+	name := d.Get("name").(string)
+	content := d.Get("content").(string)
+	if d.HasChange("content") {
+		filename, err := uploadNewAuditFile(sc, name, content)
+		if err != nil {
+			return diag.FromErr(err)
+		}
+		d.Set("sc_filename", filename)
+	}
 
 	auditFile, err := sc.UpdateAuditFile(buildAuditFileInput(d))
 	if err != nil {
 		return diag.FromErr(err)
 	}
 
+	if d.HasChange("content") && d.HasChange("sc_filename") {
+		// Now that we've updated the audit file, including the new content,
+		// remove the old file for cleanliness, unless it's the same filename.
+		err := sc.DeleteFile(oldFilename)
+		if err != nil {
+			// If we can't delete the old file, shrug and move on, could be referred to elsewhere
+			return diag.Diagnostics{
+				{
+					Severity: diag.Warning,
+					Summary:  "Unable to delete old audit file, may still be in use.",
+					Detail:   err.Error(),
+				},
+			}
+		}
+	}
 	Logf(logDebug, "response: %+v", auditFile)
 
 	return resourceAuditFileRead(ctx, d, m)
