@@ -29,6 +29,8 @@ import (
 // Because the permissions are numerous and identical, handling by hand seemed like a legibility nightmare.
 // See getRolePermission and setRolePermission down below for tools to handle the mapped access with
 // reflection.
+const rolePermissionPrefix = "perm_"
+
 var rolePermissions = map[string]string{
 	"manage_groups":              "PermManageGroups",
 	"manage_roles":               "PermManageRoles",
@@ -82,10 +84,11 @@ func ResourceRole() *schema.Resource {
 	}
 
 	for t := range rolePermissions {
-		resource.Schema[t] = &schema.Schema{
-			Type:     schema.TypeBool,
-			Optional: true,
-			Default:  false,
+		resource.Schema[fmt.Sprintf("%s%s", rolePermissionPrefix, t)] = &schema.Schema{
+			Type:        schema.TypeBool,
+			Optional:    true,
+			Description: fmt.Sprintf("Set permission flag %s", rolePermissions[t]),
+			Default:     false,
 		}
 	}
 
