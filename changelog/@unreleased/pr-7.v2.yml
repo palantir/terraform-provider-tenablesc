@@ -1,0 +1,7 @@
+type: improvement
+improvement:
+  description: |-
+    Documentation improvements - Adding examples to all resources and datasources.
+    Revise tenablesc_role with perm_ prefixes - permissions flags need some naming organization to make documentation readable.
+  links:
+  - https://github.com/palantir/terraform-provider-tenablesc/pull/7

@@ -33,7 +33,7 @@ data "tenablesc_repository" "default" {
 }
 
 output "tenablesc_default_repository_id" {
-  value = tenablesc_repository.default.id
+  value = data.tenablesc_repository.default.id
 }
 ```
 
