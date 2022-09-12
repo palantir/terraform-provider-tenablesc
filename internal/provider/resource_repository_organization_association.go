@@ -108,7 +108,7 @@ func resourceRepositoryOrganizationAssociationRead(ctx context.Context, d *schem
 		if err != nil {
 			return diag.FromErr(err)
 		}
-		org["org_id"] = int(orgIDInt)
+		org["organization_id"] = int(orgIDInt)
 		org["group_assignment"] = ro.GroupAssign
 
 		organizations = append(organizations, org)
@@ -155,7 +155,7 @@ func buildRepositoryOrganizationAssociationInputs(d *schema.ResourceData) (*tena
 	for _, org := range organizations {
 		org := org.(map[string]interface{})
 
-		id, ok := org["org_id"]
+		id, ok := org["organization_id"]
 		if !ok {
 			return nil, fmt.Errorf("got null organization id")
 		}
