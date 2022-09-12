@@ -171,7 +171,7 @@ func buildOrgInputs(d *schema.ResourceData) (*tenablesc.Organization, diag.Diagn
 	}
 
 	org.ZoneSelection = d.Get("zone_selection").(string)
-	zoneSet, ok := d.Get("zones").(*schema.Set)
+	zoneSet, ok := d.Get("scan_zone_ids").(*schema.Set)
 	if !ok {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
