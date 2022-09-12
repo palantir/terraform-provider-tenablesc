@@ -1,0 +1,5 @@
+type: fix
+fix:
+  description: Correct typo in repository organization association
+  links:
+  - https://github.com/palantir/terraform-provider-tenablesc/pull/14
