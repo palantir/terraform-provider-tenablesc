@@ -239,7 +239,7 @@ go4.org/intern
 # go4.org/unsafe/assume-no-moving-gc v0.0.0-20220617031537-928513b29760
 ## explicit; go 1.11
 go4.org/unsafe/assume-no-moving-gc
-# golang.org/x/crypto v0.0.0-20220829220503-c86fa9a7ed90
+# golang.org/x/crypto v0.0.0-20220919173607-35f4265a4bc0
 ## explicit; go 1.17
 golang.org/x/crypto/bcrypt
 golang.org/x/crypto/blowfish
