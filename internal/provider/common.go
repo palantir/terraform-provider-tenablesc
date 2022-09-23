@@ -96,7 +96,8 @@ func handleNotFoundError(d *schema.ResourceData, err error) diag.Diagnostics {
 }
 
 // DiffSuppressParsedTimes handles tenable's attempts to be incredibly helpful by
-//   returning timestamps in local time instead of UTC.
+//
+//	returning timestamps in local time instead of UTC.
 const (
 	tenableTime = time.RFC3339
 )
@@ -119,9 +120,10 @@ func DiffSuppressParsedTimes(k, oldValue, newValue string, d *schema.ResourceDat
 }
 
 // diffSuppressNormalizedIPSet takes an old and new string which _may_ be a set of IPs.
-//   If at any point it fails to parse, it'll return false quietly.
-//   Tenable's upstream libraries perform _some_ kind of hilarious normalization on IP sets.
-//   it's our job to parse oldValue and newValue into IPSets and ask if they're equal.
+//
+//	If at any point it fails to parse, it'll return false quietly.
+//	Tenable's upstream libraries perform _some_ kind of hilarious normalization on IP sets.
+//	it's our job to parse oldValue and newValue into IPSets and ask if they're equal.
 func diffSuppressNormalizedIPSet(k, oldValue, newValue string, d *schema.ResourceData) bool {
 
 	oldSet, err := buildIPSetForTenableFormat(oldValue)
