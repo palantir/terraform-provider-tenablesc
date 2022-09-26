@@ -17,8 +17,8 @@ type Credential struct {
 }
 
 type allCredentialsInternal struct {
-	Usable     []*Credential `json:"usable,omitempty"`
-	Manageable []*Credential `json:"manageable,omitempty"`
+	Usable     []*Credential `json:"usable,omitempty" tenable:"recurse"`
+	Manageable []*Credential `json:"manageable,omitempty" tenable:"recurse"`
 }
 
 func (c *Client) GetAllCredentials() ([]*Credential, error) {
