@@ -1,0 +1,5 @@
+type: improvement
+improvement:
+  description: Updating Dependencies
+  links:
+  - https://github.com/palantir/terraform-provider-tenablesc/pull/22
