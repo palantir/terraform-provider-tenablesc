@@ -80,6 +80,7 @@ func ResourceRecastRisk() *schema.Resource {
 				Optional:         true,
 				Default:          "any",
 				ValidateDiagFunc: validateRecastAcceptRiskProtocol,
+				DiffSuppressFunc: DiffSuppressCase,
 			},
 			"comments": {
 				Type:        schema.TypeString,

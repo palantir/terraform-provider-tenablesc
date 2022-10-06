@@ -80,6 +80,7 @@ func ResourceAcceptRisk() *schema.Resource {
 				Optional:         true,
 				Default:          "any",
 				ValidateDiagFunc: validateRecastAcceptRiskProtocol,
+				DiffSuppressFunc: DiffSuppressCase,
 			},
 			"expiration": {
 				Type:                  schema.TypeString,

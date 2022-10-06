@@ -48,10 +48,10 @@ const (
 )
 
 var RecastAcceptRiskProtocolIDMap = map[string]string{
-	"TCP":     "6",
-	"UDP":     "17",
-	"ICMP":    "1",
-	"Unknown": "0",
+	"tcp":     "6",
+	"udp":     "17",
+	"icmp":    "1",
+	"unknown": "0",
 	"any":     "any",
 }
 
@@ -197,8 +197,15 @@ func validateRecastAcceptRiskProtocol(protocol any, path cty.Path) (diags diag.D
 	return
 }
 
+func DiffSuppressCase(k, old, new string, d *schema.ResourceData) bool {
+	if strings.ToLower(old) == strings.ToLower(new) {
+		return true
+	}
+	return false
+}
+
 func getRecastAcceptRiskProtocolID(protocol string) (string, error) {
-	id, ok := RecastAcceptRiskProtocolIDMap[protocol]
+	id, ok := RecastAcceptRiskProtocolIDMap[strings.ToLower(protocol)]
 	if !ok {
 		return "", fmt.Errorf("invalid protocol '%s'", protocol)
 	}
