@@ -62,7 +62,12 @@ resource "tenablesc_accept_risk" "self_signed_certificate" {
   * For 'ip' must be a list of IP addresses
   * For 'asset' must be a list of asset IDs.
 - `port` (String) Network port
-- `protocol` (String) Network protocol
+- `protocol` (String) Network protocol. Default: 'any' 
+  * tcp
+  * udp
+  * icmp
+  * unknown 
+  * any
 
 ### Read-Only
 
