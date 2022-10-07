@@ -24,6 +24,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/hashicorp/go-cty/cty"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/palantir/tenablesc-client/tenablesc"
@@ -45,6 +46,14 @@ const (
 	//logWarn  = "WARN"
 	logInfo = "INFO"
 )
+
+var RecastAcceptRiskProtocolIDMap = map[string]string{
+	"tcp":     "6",
+	"udp":     "17",
+	"icmp":    "1",
+	"unknown": "0",
+	"any":     "any",
+}
 
 // Intended for use by logging functions that want to identify where in code
 // things are happening.
@@ -174,4 +183,32 @@ func buildIPSetForTenableFormat(iplist string) (*netaddr.IPSet, error) {
 	}
 
 	return builder.IPSet()
+}
+
+func validateRecastAcceptRiskProtocol(protocol any, path cty.Path) (diags diag.Diagnostics) {
+
+	if _, err := getRecastAcceptRiskProtocolID(protocol.(string)); err != nil {
+		diags = append(diags, diag.Diagnostic{
+			Severity:      diag.Error,
+			Summary:       fmt.Sprintf("failed to get protocol id: %s", err),
+			AttributePath: path,
+		})
+	}
+	return
+}
+
+func DiffSuppressCase(k, old, new string, d *schema.ResourceData) bool {
+	if strings.ToLower(old) == strings.ToLower(new) {
+		return true
+	}
+	return false
+}
+
+func getRecastAcceptRiskProtocolID(protocol string) (string, error) {
+	id, ok := RecastAcceptRiskProtocolIDMap[strings.ToLower(protocol)]
+	if !ok {
+		return "", fmt.Errorf("invalid protocol '%s'", protocol)
+	}
+
+	return id, nil
 }

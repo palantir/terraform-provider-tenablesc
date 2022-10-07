@@ -16,6 +16,7 @@ package provider
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -74,10 +75,12 @@ func ResourceRecastRisk() *schema.Resource {
 				Default:     "any",
 			},
 			"protocol": {
-				Type:        schema.TypeString,
-				Description: descriptionProtocol,
-				Optional:    true,
-				Default:     "any",
+				Type:             schema.TypeString,
+				Description:      descriptionProtocol,
+				Optional:         true,
+				Default:          "any",
+				ValidateDiagFunc: validateRecastAcceptRiskProtocol,
+				DiffSuppressFunc: DiffSuppressCase,
 			},
 			"comments": {
 				Type:        schema.TypeString,
@@ -94,9 +97,14 @@ func resourceRecastRiskCreate(ctx context.Context, d *schema.ResourceData, m int
 
 	sc := m.(*tenablesc.Client)
 
-	recastRiskResponse, err := sc.CreateRecastRiskRule(buildRecastRiskInput(d))
+	recastRiskInput, err := buildRecastRiskInput(d)
 	if err != nil {
-		return diag.FromErr(err)
+		return diag.FromErr(fmt.Errorf("failed to build recast risk rule input: %w", err))
+	}
+
+	recastRiskResponse, err := sc.CreateRecastRiskRule(recastRiskInput)
+	if err != nil {
+		return diag.FromErr(fmt.Errorf("failed to create recast risk rule: %w", err))
 	}
 
 	Logf(logDebug, "response: %+v", recastRiskResponse)
@@ -162,15 +170,19 @@ func resourceRecastRiskDelete(ctx context.Context, d *schema.ResourceData, m int
 	return nil
 }
 
-func buildRecastRiskInput(d *schema.ResourceData) *tenablesc.RecastRiskRule {
+func buildRecastRiskInput(d *schema.ResourceData) (*tenablesc.RecastRiskRule, error) {
 	pluginID := d.Get("plugin_id").(string)
 	repositoryID := d.Get("repository_id").(string)
 	newSeverity := d.Get("new_severity").(string)
 	hostType := d.Get("host_type").(string)
 	hostValue := d.Get("host_value").(string)
 	port := d.Get("port").(string)
-	protocol := d.Get("protocol").(string)
 	comments := d.Get("comments").(string)
+
+	protocol, err := getRecastAcceptRiskProtocolID(d.Get("protocol").(string))
+	if err != nil {
+		return nil, fmt.Errorf("failed to get protocol id: %w", err)
+	}
 
 	rrInput := &tenablesc.RecastRiskRule{
 		RecastRiskRuleBaseFields: tenablesc.RecastRiskRuleBaseFields{
@@ -186,5 +198,5 @@ func buildRecastRiskInput(d *schema.ResourceData) *tenablesc.RecastRiskRule {
 		HostValue:   hostValue,
 	}
 
-	return rrInput
+	return rrInput, nil
 }

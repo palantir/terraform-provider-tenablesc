@@ -59,7 +59,12 @@ resource "tenablesc_recast_risk" "tls_1_1_deprecated" {
   * 3 - High
   * 4 - Critical
 - `port` (String) Network port
-- `protocol` (String) Network protocol
+- `protocol` (String) Network protocol. Default: 'any' 
+  * tcp
+  * udp
+  * icmp
+  * unknown 
+  * any
 
 ### Read-Only
 

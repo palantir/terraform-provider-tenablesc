@@ -101,8 +101,13 @@ Requires Administrator (org=0) credentials.`
   * Must be empty for type 'all'; 
   * For 'ip' must be a list of IP addresses
   * For 'asset' must be a list of asset IDs.`
-	descriptionPort                 = `Network port`
-	descriptionProtocol             = `Network protocol`
+	descriptionPort     = `Network port`
+	descriptionProtocol = `Network protocol. Default: 'any' 
+  * tcp
+  * udp
+  * icmp
+  * unknown 
+  * any `
 	descriptionComments             = `Comments`
 	descriptionAcceptRiskExpiration = `Expiration date for accept risk rule in RFC3339 format`
 

@@ -75,10 +75,12 @@ func ResourceAcceptRisk() *schema.Resource {
 				Default:     "any",
 			},
 			"protocol": {
-				Type:        schema.TypeString,
-				Description: descriptionProtocol,
-				Optional:    true,
-				Default:     "any",
+				Type:             schema.TypeString,
+				Description:      descriptionProtocol,
+				Optional:         true,
+				Default:          "any",
+				ValidateDiagFunc: validateRecastAcceptRiskProtocol,
+				DiffSuppressFunc: DiffSuppressCase,
 			},
 			"expiration": {
 				Type:                  schema.TypeString,
@@ -109,9 +111,13 @@ func resourceAcceptRiskCreate(ctx context.Context, d *schema.ResourceData, m int
 	hostType := d.Get("host_type").(string)
 	hostValue := d.Get("host_value").(string)
 	port := d.Get("port").(string)
-	protocol := d.Get("protocol").(string)
 	expiration := d.Get("expiration").(string)
 	comments := d.Get("comments").(string)
+
+	protocol, err := getRecastAcceptRiskProtocolID(d.Get("protocol").(string))
+	if err != nil {
+		return diag.FromErr(fmt.Errorf("failed to get protocol id: %w", err))
+	}
 
 	rule := &tenablesc.AcceptRiskRule{
 		AcceptRiskRuleBaseFields: tenablesc.AcceptRiskRuleBaseFields{
