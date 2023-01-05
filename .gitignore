@@ -6,3 +6,4 @@ tf_test/terraform.tfstate.backup
 tf_test/crash.log
 .idea/
 dist/
+.git/
