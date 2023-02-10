@@ -28,6 +28,8 @@ type ScanPolicyFamilies struct {
 	ID      string     `json:"id"`
 	Name    string     `json:"name,omitempty"`
 	Count   string     `json:"count,omitempty"`
+	State   string     `json:"state,omitempty"`
+	Type    string     `json:"type,omitempty"`
 	Plugins []BaseInfo `json:"plugins,omitempty"`
 }
 

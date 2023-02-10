@@ -10,7 +10,8 @@ import (
 // Common structures used throughout the Tenable API.
 
 // BaseInfo is used in the API to refer to related objects;
-//   For input, only the ID is needed; responses will include name and description.
+//
+//	For input, only the ID is needed; responses will include name and description.
 type BaseInfo struct {
 	ID          ProbablyString `json:"id,omitempty"`
 	Name        string         `json:"name,omitempty"`
@@ -18,9 +19,11 @@ type BaseInfo struct {
 }
 
 // UserInfo is used inb the API to refer to users.
-//   For input, only the ID is needed; responses will include remaining fields.
+//
+//	For input, only the ID is needed; responses will include remaining fields.
 type UserInfo struct {
 	ID        ProbablyString `json:"id,omitempty"`
+	UUID      string         `json:"uuid,omitempty"`
 	Username  string         `json:"username,omitempty"`
 	Firstname string         `json:"firstname,omitempty"`
 	Lastname  string         `json:"lastname,omitempty"`
@@ -47,10 +50,11 @@ func ToFakeBool(b bool) FakeBool {
 }
 
 // ProbablyString is used for most ID fields in the API;
-//  the SC API generally returns positive IDs as strings, but
-//  -1 and sometimes 0 are returned numerically.
-//  Since the API _accepts_ strings in those locations always, we only need to handle
-//  the output from calls.
+//
+//	the SC API generally returns positive IDs as strings, but
+//	-1 and sometimes 0 are returned numerically.
+//	Since the API _accepts_ strings in those locations always, we only need to handle
+//	the output from calls.
 type ProbablyString string
 
 func (p *ProbablyString) UnmarshalJSON(data []byte) error {
@@ -73,8 +77,9 @@ func (p *ProbablyString) UnmarshalJSON(data []byte) error {
 }
 
 // UnixEpochStringTime would ideally be time.Time, but partial-unmarshalling
-//  every single place we use a timestamp to do that conversion would be somewhat excruciating.
-//  So this is the compromise.
+//
+//	every single place we use a timestamp to do that conversion would be somewhat excruciating.
+//	So this is the compromise.
 type UnixEpochStringTime string
 
 func (s UnixEpochStringTime) ToDateTime() (time.Time, error) {
