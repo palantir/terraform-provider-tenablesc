@@ -136,9 +136,10 @@ Requires Administrator (org=0) credentials.`
  * fullAccess
  * partial`
 
-	descriptionScanPolicyPreferences = `Key-value map of preferences to set and their values. Refer to documentation and browser developer tools to get preference names`
-	descriptionScanPolicyFamilies    = `Plugin Families to include in scan`
-	descriptionScanPolicyTag         = `Tag for scan policy`
+	descriptionScanPolicyPreferences   = `Key-value map of preferences to set and their values. Refer to documentation and browser developer tools to get preference names`
+	descriptionScanPolicyFamilies      = `Plugin Families to include in scan`
+	descriptionScanPolicyFamiliesState = `Plugin Families state to include in scan. Must be set to 'unlocked' for Tenable.SC 6x`
+	descriptionScanPolicyTag           = `Tag for scan policy`
 
 	descriptionScanZoneCIDRs = `CIDR blocks included in scan zone`
 )
