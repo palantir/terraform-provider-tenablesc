@@ -1,0 +1,5 @@
+type: improvement
+improvement:
+  description: allow configuring plugin family's state for Scan policy resources
+  links:
+  - https://github.com/palantir/terraform-provider-tenablesc/pull/64
