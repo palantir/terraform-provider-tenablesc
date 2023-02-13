@@ -102,6 +102,25 @@ func (c *Client) GetScanResult(id string) (*ScanResult, error) {
 	return &resp, nil
 }
 
+func (c *Client) DeleteScanResult(id string) error {
+	if _, err := c.deleteResource(fmt.Sprintf("%s/%s", scanResultEndpoint, id), nil, nil); err != nil {
+		return fmt.Errorf("unable to delete scan result with id %s: %w", id, err)
+	}
+
+	return nil
+}
+
+// StopScanResult Stops the Scan Result associated with {id}.
+// NOTE: This endpoint is not applicable for Agent Sync Results.
+// ref: https://docs.tenable.com/tenablesc/api/Scan-Result.htm#ScanResultRESTReference-/scanResult/{id}/stop
+func (c *Client) StopScanResult(id string) error {
+	if _, err := c.postResource(fmt.Sprintf("%s/%s/stop", scanResultEndpoint, id), nil, nil); err != nil {
+		return fmt.Errorf("unable to stop scan result with id %s: %w", id, err)
+	}
+
+	return nil
+}
+
 func (c *Client) DownloadScanResult(id string) ([]byte, error) {
 
 	possiblyZippedStream, err := c.internalDownloadScanResult(id)

@@ -33,7 +33,7 @@ type Scan struct {
 	Reports              []ScanReports  `json:"reports,omitempty"`
 	RolloverType         string         `json:"rolloverType,omitempty"`
 	Schedule             *ScanSchedule  `json:"schedule,omitempty"`
-	ScanningVirtualHosts FakeBool       `json:"ScanningVirtualHosts,omitempty"`
+	ScanningVirtualHosts FakeBool       `json:"scanningVirtualHosts,omitempty"`
 	Status               string         `json:"status,omitempty"`
 	TimeoutAction        string         `json:"timeoutAction,omitempty"`
 	Type                 string         `json:"type,omitempty"`
@@ -60,6 +60,24 @@ type ScanSchedule struct {
 type ScanDependentSchedule struct {
 	BaseInfo
 	Status string `json:"status,omitempty"`
+}
+
+type ScanStartResult struct {
+	ScanID     string `json:"scanID"`
+	ScanResult struct {
+		BaseInfo
+		InitiatorID    int    `json:"initiatorID"`
+		OwnerID        string `json:"ownerID"`
+		ScanID         string `json:"scanID"`
+		ResultsSyncID  int    `json:"resultsSyncID"`
+		JobID          string `json:"jobID"`
+		RepositoryID   string `json:"repositoryID"`
+		Details        string `json:"details"`
+		Status         string `json:"status"`
+		DownloadFormat string `json:"downloadFormat"`
+		DataFormat     string `json:"dataFormat"`
+		ResultType     string `json:"resultType"`
+	} `json:"scanResult"`
 }
 
 type orgScanResponse struct {
@@ -109,6 +127,16 @@ func (c *Client) CreateScan(s *Scan) (*Scan, error) {
 
 	return resp, nil
 
+}
+
+func (c *Client) StartScan(id string) (*ScanStartResult, error) {
+	resp := &ScanStartResult{}
+
+	if _, err := c.postResource(fmt.Sprintf("%s/%s/launch", scanEndpoint, id), nil, resp); err != nil {
+		return nil, fmt.Errorf("failed to start scan id %s: %w", id, err)
+	}
+
+	return resp, nil
 }
 
 func (c *Client) GetScan(id string) (*Scan, error) {

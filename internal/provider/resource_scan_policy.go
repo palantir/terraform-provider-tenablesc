@@ -71,6 +71,12 @@ func ResourceScanPolicy() *schema.Resource {
 				Optional:    true,
 				Elem:        &schema.Schema{Type: schema.TypeString},
 			},
+			"families_state": {
+				Type:        schema.TypeString,
+				Description: descriptionScanPolicyFamiliesState,
+				Optional:    true,
+				Default:     "",
+			},
 			"tag": {
 				Type:        schema.TypeString,
 				Description: descriptionScanPolicyTag,
@@ -224,6 +230,7 @@ func buildScanPolicyInputs(d *schema.ResourceData) (*tenablesc.ScanPolicy, error
 	policyTemplateID := d.Get("policy_template_id").(string)
 	auditFileID := d.Get("audit_file_id").(string)
 	families := d.Get("families").(*schema.Set).List()
+	familiesState := d.Get("families_state").(string)
 	tag := d.Get("tag").(string)
 
 	// To identify what to remove from prefs, look at what's in state vs what we're
@@ -267,7 +274,7 @@ func buildScanPolicyInputs(d *schema.ResourceData) (*tenablesc.ScanPolicy, error
 
 	var famInput []tenablesc.ScanPolicyFamilies
 	for _, family := range families {
-		famInput = append(famInput, tenablesc.ScanPolicyFamilies{ID: family.(string)})
+		famInput = append(famInput, tenablesc.ScanPolicyFamilies{ID: family.(string), State: familiesState})
 	}
 	if len(famInput) > 0 {
 		spInput.Families = famInput

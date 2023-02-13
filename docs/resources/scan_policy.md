@@ -55,6 +55,7 @@ resource "sc_scan_policy" "vulnerability_scan_port22" {
 - `audit_file_id` (String) Audit File ID
 - `description` (String) Scan Policy description
 - `families` (Set of String) Plugin Families to include in scan
+- `families_state` (String) Plugin Families state to include in scan. Must be set to 'unlocked' for Tenable.SC 6x
 - `preferences` (Map of String) Key-value map of preferences to set and their values. Refer to documentation and browser developer tools to get preference names
 - `tag` (String) Tag for scan policy
 
