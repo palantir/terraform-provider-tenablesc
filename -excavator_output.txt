@@ -1,0 +1,22 @@
+./godelw verify failed after updating godel plugins and assets
+
+Command that caused error:
+./godelw verify --skip-test --skip-check
+
+Output:
+Running format...
+Running mod...
+Running generate...
+rendering website for provider "terraform-provider-tenablesc" (as "terraform-provider-tenablesc")
+copying any existing content to tmp dir
+exporting schema from Terraform
+compiling provider "tenablesc"
+using Terraform CLI binary from PATH if available, otherwise downloading latest Terraform CLI binary
+Error executing command: unable to generate website: Get "https://checkpoint-api.hashicorp.com/v1/check/terraform?arch=amd64&os=linux&signature=&version=": dial tcp [2600:9000:261f:5a00:4:b6df:d440:93a1]:443: connect: cannot assign requested address
+
+exit status 1
+main.go:26: running "go": exit status 1
+Error: failed to run go generate in "/local/repositories/palantir-terraform-provider-tenablesc-516062331": exit status 1
+Running license...
+Failed tasks:
+	generate
