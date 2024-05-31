@@ -1,0 +1,5 @@
+type: fix
+fix:
+  description: Add optional attribute `Inactivity timeout` for tenablesc_scan resource
+  links:
+  - https://github.com/palantir/terraform-provider-tenablesc/pull/168
