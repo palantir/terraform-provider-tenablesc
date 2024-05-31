@@ -8,7 +8,9 @@ import (
 const assetsEndpoint = "/asset"
 
 // Asset defines common fields used in requests and responses for assets
-//   per https://docs.tenable.com/tenablesc/api/Asset.htm
+//
+//	per https://docs.tenable.com/tenablesc/api/Asset.htm
+//
 // Some fields are presented abstracted here and internally reformatted for transport.
 type Asset struct {
 	BaseInfo

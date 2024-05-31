@@ -16,9 +16,10 @@ const (
 )
 
 // RecastRiskRuleBaseFields are the fields renderable directly both to and from the API.
-//  Requests take a list of repositories while all responses only ever return a single repository.
-//  HostValue response structure also varies depending on type; the client masks out this conversion
-//   to and from the API structures.
+//
+//	Requests take a list of repositories while all responses only ever return a single repository.
+//	HostValue response structure also varies depending on type; the client masks out this conversion
+//	 to and from the API structures.
 type RecastRiskRuleBaseFields struct {
 	ID           string   `json:"id,omitempty"`
 	Organization BaseInfo `json:"organization,omitempty"`

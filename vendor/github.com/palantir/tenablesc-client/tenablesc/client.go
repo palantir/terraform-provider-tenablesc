@@ -25,15 +25,15 @@ type response struct {
 }
 
 // NewClient creates a Tenable.SC client object with defaults applied.
-//   Don't forget to SetAPIKey or SetBasicAuth to ensure you make credentialed queries.
+//
+//	Don't forget to SetAPIKey or SetBasicAuth to ensure you make credentialed queries.
 func NewClient(baseURL string) *Client {
-
-	c := resty.New().
+	client := resty.New().
 		SetBaseURL(baseURL).
 		SetHeader(http.CanonicalHeaderKey("User-Agent"), DefaultUserAgent).
 		AddRetryCondition(defaultTenableRetryConditions)
 
-	return &Client{*c}
+	return &Client{*client}
 }
 
 // SetAPIKey adds the API Key header to all queries with the client.
@@ -55,6 +55,12 @@ func (c *Client) SetBasicAuth(username, password string) *Client {
 func (c *Client) SetUserAgent(agent string) *Client {
 	c.client.SetHeader(http.CanonicalHeaderKey("User-Agent"), agent)
 	return c
+}
+
+// RestyClient returns a pointer to the underlying resty.Client instance.
+// This enables access to all the features and options provided by the resty library.
+func (c *Client) RestyClient() *resty.Client {
+	return &c.client
 }
 
 func defaultTenableRetryConditions(resp *resty.Response, err error) bool {
@@ -85,7 +91,8 @@ func defaultTenableRetryConditions(resp *resty.Response, err error) bool {
 // This function inspects the provided interface for which fields should be requested.
 // All `json` field names are included in the list;
 // If the field includes `tenable:recurse` tag, then the child structure is also interrogated for
-//  additional fields to extract.
+//
+//	additional fields to extract.
 func getFieldsForStruct(d interface{}) []string {
 	t := reflect.TypeOf(d)
 
@@ -190,7 +197,8 @@ func (c *Client) deleteResource(endpoint string, input interface{}, dest interfa
 }
 
 // handleRequest implements the application-side retry and backoff logic for all queries, retrying in case of
-//  application-side errors that are clearly transient.
+//
+//	application-side errors that are clearly transient.
 func (c *Client) handleRequest(method, endpoint string, request *resty.Request, dest interface{}) (*response, error) {
 	var err error
 
@@ -248,7 +256,8 @@ func handleHTTPError(resp *resty.Response) error {
 }
 
 // handleResponse's job is to handle finishing the unmarshal, as well as
-//  wrapping the error if there's an error here.
+//
+//	wrapping the error if there's an error here.
 func handleResponse(resp *resty.Response, dest interface{}) error {
 	respErr := handleHTTPError(resp)
 

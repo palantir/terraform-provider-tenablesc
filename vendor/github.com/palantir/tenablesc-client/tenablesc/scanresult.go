@@ -5,9 +5,8 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/url"
-	"strings"
 	"time"
 
 	"github.com/go-resty/resty/v2"
@@ -56,10 +55,8 @@ type ScanResult struct {
 
 type scanResultInternal struct {
 	Manageable []*ScanResult `json:"manageable" tenable:"recurse"`
-	Useable    []*ScanResult `json:"useable" tenable:"recurse"`
+	Usable     []*ScanResult `json:"usable" tenable:"recurse"`
 }
-
-// Do the usable/manageable split thing. ffff.
 
 // takes startTime + endTime parameters, but defaults to last 30d.
 
@@ -69,32 +66,43 @@ func (c *Client) GetAllScanResults() ([]*ScanResult, error) {
 
 func (c *Client) GetAllScanResultsByTime(start, end time.Time) ([]*ScanResult, error) {
 
-	v := url.Values{}
-
+	params := url.Values{}
 	if !start.IsZero() {
-		v.Add("startTime", fmt.Sprintf("%d", start.Unix()))
+		params.Add("startTime", fmt.Sprintf("%d", start.Unix()))
 	}
 	if !end.IsZero() {
-		v.Add("endTime", fmt.Sprintf("%d", start.Unix()))
+		params.Add("endTime", fmt.Sprintf("%d", end.Unix()))
 	}
 
-	resourceURL := strings.Builder{}
-	resourceURL.WriteString(scanResultEndpoint)
-	if len(v) > 0 {
-		resourceURL.WriteString(fmt.Sprintf("?%s", v.Encode()))
+	resourceURL := url.URL{
+		Path:     scanResultEndpoint,
+		RawQuery: params.Encode(),
 	}
 
 	var resp scanResultInternal
-
 	if _, err := c.getResource(resourceURL.String(), &resp); err != nil {
 		return nil, fmt.Errorf("failed to get scan results: %w", err)
 	}
 
-	return resp.Manageable, nil
+	var spOut []*ScanResult
+	spMap := make(map[ProbablyString]bool)
+
+	for _, o := range resp.Usable {
+		spOut = append(spOut, o)
+		spMap[o.ID] = true
+	}
+	for _, o := range resp.Manageable {
+		if _, exists := spMap[o.ID]; !exists {
+			spOut = append(spOut, o)
+			spMap[o.ID] = true
+		}
+	}
+
+	return spOut, nil
 }
 
 func (c *Client) GetScanResult(id string) (*ScanResult, error) {
-	resp := ScanResult{}
+	var resp ScanResult
 	if _, err := c.getResource(fmt.Sprintf("%s/%s", scanResultEndpoint, id), &resp); err != nil {
 		return nil, fmt.Errorf("failed to get scan result %s: %w", id, err)
 	}
@@ -177,7 +185,7 @@ func firstFileFromPKZipSlice(slice []byte) ([]byte, error) {
 
 	reader, err := zip.NewReader(bytes.NewReader(slice), int64(len(slice)))
 	if err != nil {
-		return nil, fmt.Errorf("nessus scan result zip could not be parsed: %w", err)
+		return nil, fmt.Errorf("failed to create zip reader: %w", err)
 	}
 
 	if len(reader.File) == 0 {
@@ -189,7 +197,7 @@ func firstFileFromPKZipSlice(slice []byte) ([]byte, error) {
 		return nil, fmt.Errorf("could not open first file in zip: %w", err)
 	}
 
-	results, err = ioutil.ReadAll(file)
+	results, err = io.ReadAll(file)
 	if err != nil {
 		return nil, fmt.Errorf("failed to read zip file: %w", err)
 	}

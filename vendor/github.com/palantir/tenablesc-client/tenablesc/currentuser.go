@@ -7,7 +7,8 @@ import (
 const currentUserEndpoint = "/currentUser"
 
 // CurrentUser represents response structure for https://docs.tenable.com/tenablesc/api/Current-User.htm
-//   This is perfect for testing credential validity and user type.
+//
+//	This is perfect for testing credential validity and user type.
 type CurrentUser struct {
 	BaseInfo
 	Status       string   `json:"status,omitempty"`

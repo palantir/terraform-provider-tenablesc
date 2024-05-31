@@ -59,7 +59,7 @@ type RepoOrganization struct {
 	GroupAssign string `json:"groupAssign,omitempty"`
 }
 
-//input and output formats are different.  Handle the differences internally
+// input and output formats are different.  Handle the differences internally
 type repoInternal struct {
 	RepoBaseFields
 	TypeFields json.RawMessage `json:"typeFields,omitempty"`

@@ -27,7 +27,8 @@ func (c *Client) ImportScanResult(resultImport *ScanResultImport) error {
 }
 
 // ImportScanResultFile composes the UploadFile and ImportScanResult calls necessary to import a scan result to a target repository.
-//   Path is expected to be a path on the local filesystem.
+//
+//	Path is expected to be a path on the local filesystem.
 func (c *Client) ImportScanResultFile(path string, repositoryID string, classifyMitigatedAge string, dhcpTracking, scanningVirtualHosts bool) error {
 
 	file, err := c.UploadFile(path, "")

@@ -17,6 +17,7 @@ type Scan struct {
 	DHCPTracking         FakeBool            `json:"dhcpTracking,omitempty"`
 	EmailOnFinish        FakeBool            `json:"emailOnFinish,omitempty"`
 	EmailOnLaunch        FakeBool            `json:"emailOnLaunch,omitempty"`
+	InactivityTimeout    string              `json:"inactivityTimeout,omitempty"`
 	IPList               string              `json:"ipList,omitempty"`
 	MaxScanTime          string              `json:"maxScanTime,omitempty"`
 	ModifiedTime         UnixEpochStringTime `json:"modifiedTime,omitempty"`
