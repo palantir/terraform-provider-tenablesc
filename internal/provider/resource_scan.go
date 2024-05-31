@@ -71,7 +71,7 @@ func ResourceScan() *schema.Resource {
 			"max_scan_time": {
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "3600",
+				Default:  "unlimited",
 			},
 			"inactivity_timeout": {
 				Type:     schema.TypeString,
