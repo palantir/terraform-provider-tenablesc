@@ -1,0 +1,5 @@
+type: improvement
+improvement:
+  description: use unlimited as default max_scan_time
+  links:
+  - https://github.com/palantir/terraform-provider-tenablesc/pull/170
