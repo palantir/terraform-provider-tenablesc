@@ -39,5 +39,3 @@ resource "tenablesc_auditfile" "stig_ubuntu_20_04" {
 
 - `id` (String) The ID of this resource.
 - `sc_filename` (String) Filename of audit file as stored in SC
-
-

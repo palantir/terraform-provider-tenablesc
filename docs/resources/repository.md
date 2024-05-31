@@ -63,5 +63,3 @@ Optional:
 - `compliance_days` (Number)
 - `mitigated_days` (Number)
 - `passive_days` (Number)
-
-

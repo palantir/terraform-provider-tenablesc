@@ -44,5 +44,3 @@ resource "tenablesc_recast_risk" "tls_1_1_deprecated" {
 ### Read-Only
 
 - `id` (String) The ID of this resource.
-
-

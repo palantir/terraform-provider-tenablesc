@@ -38,5 +38,3 @@ resource "tenablesc_accept_risk" "certificate_wrong_hostname" {
 ### Read-Only
 
 - `id` (String) The ID of this resource.
-
-

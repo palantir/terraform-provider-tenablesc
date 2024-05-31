@@ -36,5 +36,3 @@ resource "tenablesc_scan" "ssh_scan" {
 ### Read-Only
 
 - `id` (String) The ID of this resource.
-
-

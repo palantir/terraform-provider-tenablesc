@@ -35,5 +35,3 @@ resource "tenablesc_scan_policy" "advanced_vulnerability_scan" {
 ### Read-Only
 
 - `id` (String) The ID of this resource.
-
-

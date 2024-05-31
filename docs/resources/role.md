@@ -59,5 +59,3 @@ resource "tenablesc_role" "scan_only" {
 ### Read-Only
 
 - `id` (String) The ID of this resource.
-
-

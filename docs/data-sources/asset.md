@@ -48,5 +48,3 @@ resource "tenablesc_recast_risk" "tls_1_1_deprecated" {
 - `defined_dns_names` (List of String) DNS Names defined in the asset
 - `defined_ips` (List of String) IP addresses defined in the asset
 - `id` (String) The ID of this resource.
-
-

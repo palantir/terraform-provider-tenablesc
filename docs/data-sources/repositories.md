@@ -55,5 +55,3 @@ resource "tenablesc_accept_risk" "self_signed_certificate" {
 
 - `id` (String) The ID of this resource.
 - `repositories` (Map of String) A map of repository IDs to repository names
-
-

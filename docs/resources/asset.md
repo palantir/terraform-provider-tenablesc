@@ -47,5 +47,3 @@ resource "tenablesc_asset" "static" {
 ### Read-Only
 
 - `id` (String) The ID of this resource.
-
-

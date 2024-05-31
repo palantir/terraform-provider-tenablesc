@@ -72,5 +72,3 @@ resource "tenablesc_accept_risk" "self_signed_certificate" {
 ### Read-Only
 
 - `id` (String) The ID of this resource.
-
-

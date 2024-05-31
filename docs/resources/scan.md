@@ -62,6 +62,7 @@ resource "tenablesc_scan" "basic" {
 - `credential_ids` (List of String)
 - `description` (String)
 - `dhcp_tracking` (Boolean)
+- `inactivity_timeout` (String)
 - `ips_and_names` (String)
 - `max_scan_time` (String)
 - `scan_virtual_hosts` (Boolean)
@@ -72,5 +73,3 @@ resource "tenablesc_scan" "basic" {
 ### Read-Only
 
 - `id` (String) The ID of this resource.
-
-

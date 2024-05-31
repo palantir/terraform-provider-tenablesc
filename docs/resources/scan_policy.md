@@ -62,5 +62,3 @@ resource "sc_scan_policy" "vulnerability_scan_port22" {
 ### Read-Only
 
 - `id` (String) The ID of this resource.
-
-

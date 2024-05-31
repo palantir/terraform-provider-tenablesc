@@ -49,5 +49,3 @@ resource "tenablesc_organization_scan_zone_association" "lab" {
 ### Read-Only
 
 - `id` (String) The ID of this resource.
-
-
