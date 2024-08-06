@@ -12,12 +12,12 @@ plugins:
     - https://github.com/{{index GroupParts 1}}/{{index GroupParts 2}}/releases/download/v{{Version}}/{{Product}}-{{Version}}-{{OS}}-{{Arch}}.tgz
   plugins:
     - locator:
-        id: com.palantir.godel-mod-plugin:mod-plugin:1.40.0
+        id: com.palantir.godel-mod-plugin:mod-plugin:1.42.0
         checksums:
-          darwin-amd64: e29fef2cac0680597653deaa7e5ab904498497ad71fd53346a4ae19c37e929be
-          linux-amd64: 6c028e3beac58ce9622f143ffb99cd014ce296e3367f4bfb10e12bccb50d444a
+          darwin-amd64: 67daeb93d6022bdfca282bd9e878a40a30992ae087e39fd8cf06c208ea8e9333
+          linux-amd64: 716e2fd13e7104b67d55b9d63527a8900656082be0d1bbca848c3af83cc91e5d
     - locator:
-        id: com.palantir.godel-generate-plugin:generate-plugin:1.34.0
+        id: com.palantir.godel-generate-plugin:generate-plugin:1.36.0
         checksums:
-          darwin-amd64: c1f40ccf06f850d9020cace1c9a05d31fd81a60142f7a9ab73cad464a4bd501e
-          linux-amd64: 009dd443014db39a890a859781e392ed4237d6dcf9d8a4f38d48f0224ec1cb3c
+          darwin-amd64: 9826942be30ca00d7f9d22966778a4cf7057b4fc0c1934ca9e13797968cb0443
+          linux-amd64: 5117ed5b4216da9e71f4f1f00e880cdd49bc7ca4dd70f18fa1f9e6cbdc39a9f4
