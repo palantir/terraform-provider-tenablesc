@@ -3,10 +3,11 @@ module github.com/palantir/terraform-provider-tenablesc
 go 1.21
 
 require (
+	github.com/google/go-cmp v0.6.0
 	github.com/hashicorp/go-cty v1.4.1-0.20200414143053-d3edf31b6320
 	github.com/hashicorp/terraform-plugin-docs v0.19.2
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.34.0
-	github.com/palantir/tenablesc-client v0.25.1-0.20240513080438-9cfea8990ad5
+	github.com/palantir/tenablesc-client v0.25.1-0.20240816133617-7f67e26f86db
 	inet.af/netaddr v0.0.0-20230525184311-b8eac61e914a
 )
 
@@ -26,7 +27,6 @@ require (
 	github.com/fatih/color v1.16.0 // indirect
 	github.com/go-resty/resty/v2 v2.13.1 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
-	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/hashicorp/cli v1.1.6 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
