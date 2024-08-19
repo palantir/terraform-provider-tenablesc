@@ -43,6 +43,7 @@ Requires Administrator (org=0) credentials.`
 	descriptionDataSourceRepositories       = `Look up a set of repositories based on a regular expression name filter.`
 	descriptionDataSourceRepository         = `Look up a repository ID based on name.`
 	descriptionDataSourceScanPolicyTemplate = `Look up a scan policy template ID based on name.`
+	descriptionDataSourceAgentGroups        = `Look up a set of agent groups based on a regular expression name filter and a remote scanner ID`
 
 	// Resources
 	descriptionResourceAcceptRisk                        = `Create and manage Accept Risk Rules.` + descriptionOrgCredentialsRequired

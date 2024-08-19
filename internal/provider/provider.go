@@ -48,6 +48,7 @@ func Provider() *schema.Provider {
 			"tenablesc_assets":               DataSourceAssets(),
 			"tenablesc_scan_policy_template": DataSourceScanPolicyTemplate(),
 			"tenablesc_credential":           DataSourceCredential(),
+			"tenablesc_agent_groups":         DataSourceAgentGroups(),
 		},
 		Schema: map[string]*schema.Schema{
 			"uri": {
