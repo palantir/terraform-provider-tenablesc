@@ -34,6 +34,7 @@ func Provider() *schema.Provider {
 			"tenablesc_recast_risk":                         ResourceRecastRisk(),
 			"tenablesc_repository":                          ResourceRepository(),
 			"tenablesc_scan_policy":                         ResourceScanPolicy(),
+			"tenablesc_agent_scan":                          ResourceAgentScan(),
 			"tenablesc_scan":                                ResourceScan(),
 			"tenablesc_scan_zone":                           ResourceScanZone(),
 			"tenablesc_repository_organization_association": ResourceRepositoryOrganizationAssociation(),

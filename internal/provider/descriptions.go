@@ -56,6 +56,7 @@ Requires Administrator (org=0) credentials.`
 	descriptionResourceRepositoryOrganizationAssociation = `Manage Organization access to Repositories.` + descriptionAdminCredentialsRequired
 	descriptionResourceRole                              = `Create and Manage User Roles.` + descriptionOrgCredentialsRequired
 	descriptionResourceScan                              = `Create and Manage Scans.` + descriptionOrgCredentialsRequired
+	descriptionResourceAgentScan                         = `Create and Manage Agent Scans.` + descriptionOrgCredentialsRequired
 	descriptionResourceScanPolicy                        = `Create and Manage Scan Policies.` + descriptionOrgCredentialsRequired
 	descriptionResourceScanZone                          = `Create and Manage Scan Zones.` + descriptionAdminCredentialsRequired
 
