@@ -44,6 +44,15 @@ func (c *Client) GetAllAgentScans() ([]*AgentScan, error) {
 	return resp.Manageable, nil
 }
 
+func (c *Client) GetAgentScan(id string) (*AgentScan, error) {
+	resp := &AgentScan{}
+
+	if _, err := c.getResource(fmt.Sprintf("%s/%s", agentScanEndpoint, id), &resp); err != nil {
+		return nil, fmt.Errorf("failed to get agent scan: %w", err)
+	}
+	return resp, nil
+}
+
 func (c *Client) GetAgentGroupsForScanner(id string) ([]*AgentGroup, error) {
 	var resp []*AgentGroup
 

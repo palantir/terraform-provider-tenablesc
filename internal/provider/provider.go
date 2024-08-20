@@ -34,6 +34,7 @@ func Provider() *schema.Provider {
 			"tenablesc_recast_risk":                         ResourceRecastRisk(),
 			"tenablesc_repository":                          ResourceRepository(),
 			"tenablesc_scan_policy":                         ResourceScanPolicy(),
+			"tenablesc_agent_scan":                          ResourceAgentScan(),
 			"tenablesc_scan":                                ResourceScan(),
 			"tenablesc_scan_zone":                           ResourceScanZone(),
 			"tenablesc_repository_organization_association": ResourceRepositoryOrganizationAssociation(),
@@ -48,6 +49,7 @@ func Provider() *schema.Provider {
 			"tenablesc_assets":               DataSourceAssets(),
 			"tenablesc_scan_policy_template": DataSourceScanPolicyTemplate(),
 			"tenablesc_credential":           DataSourceCredential(),
+			"tenablesc_agent_groups":         DataSourceAgentGroups(),
 		},
 		Schema: map[string]*schema.Schema{
 			"uri": {
