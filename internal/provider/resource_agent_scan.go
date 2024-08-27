@@ -51,6 +51,11 @@ func ResourceAgentScan() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"policy_id": {
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "",
+			},
 			"scan_window": {
 				Type:     schema.TypeString,
 				Required: true,
@@ -119,6 +124,7 @@ func resourceAgentScanRead(ctx context.Context, d *schema.ResourceData, m interf
 	d.Set("name", agentScan.Name)
 	d.Set("description", agentScan.Description)
 	d.Set("repository_id", agentScan.Repository.ID)
+	d.Set("policy_id", agentScan.Policy.ID)
 	d.Set("scan_window", agentScan.ScanWindow)
 	d.Set("nessus_manager_id", agentScan.NessusManager.ID)
 	d.Set("email_on_launch", agentScan.EmailOnLaunch.AsBool())
@@ -164,6 +170,7 @@ func buildAgentScanInput(d *schema.ResourceData) *tenablesc.AgentScan {
 	name := d.Get("name").(string)
 	description := d.Get("description").(string)
 	repositoryID := d.Get("repository_id").(string)
+	policyID := d.Get("policy_id").(string)
 	scanWindow := d.Get("scan_window").(string)
 	nessusMangerID := d.Get("nessus_manager_id").(string)
 	agentGroupIDs := d.Get("agent_group_ids").([]interface{})
@@ -178,7 +185,7 @@ func buildAgentScanInput(d *schema.ResourceData) *tenablesc.AgentScan {
 			Name:        name,
 			Description: description,
 		},
-
+		Policy:     getPolicy(policyID),
 		Type:       "policy",
 		Repository: tenablesc.BaseInfo{ID: tenablesc.ProbablyString(repositoryID)},
 		NessusManager: tenablesc.BaseInfo{
@@ -213,4 +220,13 @@ func toAgentGroups(agentGroupsInterface []interface{}) []tenablesc.AgentGroup {
 	}
 
 	return agentGroups
+}
+
+func getPolicy(policyID string) *tenablesc.BaseInfo {
+	if policyID == "" {
+		return nil
+	}
+	return &tenablesc.BaseInfo{
+		ID: tenablesc.ProbablyString(policyID),
+	}
 }
