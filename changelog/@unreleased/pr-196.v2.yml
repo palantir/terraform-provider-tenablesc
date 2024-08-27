@@ -1,0 +1,5 @@
+type: improvement
+improvement:
+  description: Adding policy support to agent scan resource
+  links:
+  - https://github.com/palantir/terraform-provider-tenablesc/pull/196
