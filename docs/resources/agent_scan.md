@@ -30,6 +30,7 @@ Requires Organization credentials.
 - `description` (String)
 - `email_on_finish` (Boolean)
 - `email_on_launch` (Boolean)
+- `policy_id` (String)
 - `schedule_repeat_rule` (String)
 - `schedule_start` (String)
 

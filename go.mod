@@ -6,7 +6,7 @@ require (
 	github.com/hashicorp/go-cty v1.4.1-0.20200414143053-d3edf31b6320
 	github.com/hashicorp/terraform-plugin-docs v0.19.2
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.34.0
-	github.com/palantir/tenablesc-client v0.25.1-0.20240816133617-7f67e26f86db
+	github.com/palantir/tenablesc-client v0.25.1-0.20240827144104-07313e3c48bf
 	inet.af/netaddr v0.0.0-20230525184311-b8eac61e914a
 )
 

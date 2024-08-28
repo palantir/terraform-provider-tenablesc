@@ -18,6 +18,7 @@ type AgentScan struct {
 	EmailOnLaunch FakeBool       `json:"emailOnLaunch,omitempty"`
 	EmailOnFinish FakeBool       `json:"emailOnFinish,omitempty"`
 	Schedule      *ScanSchedule  `json:"schedule,omitempty"`
+	Policy        *BaseInfo      `json:"policy,omitempty"`
 }
 
 type agentScanResponse struct {
