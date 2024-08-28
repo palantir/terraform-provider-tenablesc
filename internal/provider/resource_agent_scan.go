@@ -54,7 +54,7 @@ func ResourceAgentScan() *schema.Resource {
 			"policy_id": {
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "",
+				Default:  "-1",
 			},
 			"scan_window": {
 				Type:     schema.TypeString,
@@ -185,7 +185,7 @@ func buildAgentScanInput(d *schema.ResourceData) *tenablesc.AgentScan {
 			Name:        name,
 			Description: description,
 		},
-		Policy:     getPolicy(policyID),
+		Policy:     &tenablesc.BaseInfo{ID: tenablesc.ProbablyString(policyID)},
 		Type:       "policy",
 		Repository: tenablesc.BaseInfo{ID: tenablesc.ProbablyString(repositoryID)},
 		NessusManager: tenablesc.BaseInfo{
@@ -220,13 +220,4 @@ func toAgentGroups(agentGroupsInterface []interface{}) []tenablesc.AgentGroup {
 	}
 
 	return agentGroups
-}
-
-func getPolicy(policyID string) *tenablesc.BaseInfo {
-	if policyID == "" {
-		return nil
-	}
-	return &tenablesc.BaseInfo{
-		ID: tenablesc.ProbablyString(policyID),
-	}
 }
