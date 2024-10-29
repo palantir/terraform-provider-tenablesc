@@ -16,6 +16,7 @@ package provider
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"regexp"
 
@@ -57,6 +58,11 @@ func dataSourceAgentGroupsRead(ctx context.Context, d *schema.ResourceData, m in
 
 	agentScannerID := d.Get("agent_scanner_id").(string)
 	agentGroups, err := sc.GetAgentGroupsForScanner(agentScannerID)
+	errors.Is(err, tenablesc.NotFoundError{})
+	nfe := tenablesc.NotFoundError{}
+	if errors.As(err, &nfe) {
+		return nil
+	}
 	if err != nil {
 		return diag.FromErr(fmt.Errorf("failed to get agent groups for scanner %s: %w", agentScannerID, err))
 	}
