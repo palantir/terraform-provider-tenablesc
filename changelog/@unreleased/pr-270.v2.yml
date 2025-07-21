@@ -1,0 +1,5 @@
+type: feature
+feature:
+  description: Support Multi auditfile scan policy
+  links:
+  - https://github.com/palantir/terraform-provider-tenablesc/pull/270
