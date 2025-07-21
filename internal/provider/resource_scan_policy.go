@@ -54,10 +54,19 @@ func ResourceScanPolicy() *schema.Resource {
 				Required:    true,
 			},
 			"audit_file_id": {
-				Type:        schema.TypeString,
-				Description: descriptionAuditFileID,
-				Optional:    true,
-				Default:     "",
+				Type:          schema.TypeString,
+				Description:   descriptionAuditFileID,
+				Optional:      true,
+				Default:       "",
+				ConflictsWith: []string{"audit_file_ids"},
+				Deprecated:    "The 'audit_file_id' is deprecated. Use 'audit_file_ids'(set) instead.",
+			},
+			"audit_file_ids": {
+				Type:          schema.TypeSet,
+				Description:   descriptionAuditFileIDs,
+				Optional:      true,
+				ConflictsWith: []string{"audit_file_id"},
+				Elem:          &schema.Schema{Type: schema.TypeString},
 			},
 			"preferences": {
 				Type:        schema.TypeMap,

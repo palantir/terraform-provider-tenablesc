@@ -87,6 +87,7 @@ Requires Administrator (org=0) credentials.`
 	descriptionOrganizationID          = `Organization ID`
 	descriptionScanPolicyTemplateID    = `Scan Policy Template ID`
 	descriptionAuditFileID             = `Audit File ID`
+	descriptionAuditFileIDs            = `Audit File IDs`
 	descriptionOrganizationScanZoneIDs = `Scan Zone IDs to be allowed to be used by organization`
 
 	// Miscellaneous
