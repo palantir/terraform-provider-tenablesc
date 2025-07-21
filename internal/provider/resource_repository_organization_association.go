@@ -178,7 +178,7 @@ func buildRepositoryOrganizationAssociationInputs(d *schema.ResourceData) (*tena
 		return nil, err
 
 	}
-	Logf(logDebug, fmt.Sprintf("built Repository Association: %s", repositoryAssociationBytes))
+	Logf(logDebug, "built Repository Association: %s", repositoryAssociationBytes)
 
 	return repositoryAssociation, nil
 }

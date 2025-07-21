@@ -57,5 +57,5 @@ func dataSourceCredentialRead(ctx context.Context, d *schema.ResourceData, m int
 		}
 	}
 
-	return diag.Errorf("No credential found with name='" + credentialName + "'")
+	return diag.Errorf("No credential found with name='%s'", credentialName)
 }
