@@ -137,13 +137,13 @@ func diffSuppressNormalizedIPSet(k, oldValue, newValue string, d *schema.Resourc
 
 	oldSet, err := buildIPSetForTenableFormat(oldValue)
 	if err != nil {
-		Logf(logDebug, err.Error())
+		Logf(logDebug, "%s", err.Error())
 		return false
 	}
 
 	newSet, err := buildIPSetForTenableFormat(newValue)
 	if err != nil {
-		Logf(logDebug, err.Error())
+		Logf(logDebug, "%s", err.Error())
 		return false
 	}
 

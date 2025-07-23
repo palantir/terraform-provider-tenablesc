@@ -54,10 +54,19 @@ func ResourceScanPolicy() *schema.Resource {
 				Required:    true,
 			},
 			"audit_file_id": {
-				Type:        schema.TypeString,
-				Description: descriptionAuditFileID,
-				Optional:    true,
-				Default:     "",
+				Type:          schema.TypeString,
+				Description:   descriptionAuditFileID,
+				Optional:      true,
+				Default:       "",
+				ConflictsWith: []string{"audit_file_ids"},
+				Deprecated:    "The 'audit_file_id' is deprecated. Use 'audit_file_ids'(set) instead.",
+			},
+			"audit_file_ids": {
+				Type:          schema.TypeSet,
+				Description:   descriptionAuditFileIDs,
+				Optional:      true,
+				ConflictsWith: []string{"audit_file_id"},
+				Elem:          &schema.Schema{Type: schema.TypeString},
 			},
 			"preferences": {
 				Type:        schema.TypeMap,
@@ -143,10 +152,15 @@ func resourceScanPolicyRead(ctx context.Context, d *schema.ResourceData, m inter
 	}
 	d.Set("families", tfFamilies)
 
-	if len(policy.AuditFiles) > 0 {
-		d.Set("audit_file_id", policy.AuditFiles[0].ID)
+	var ids []string
+	for _, auditfile := range policy.AuditFiles {
+		ids = append(ids, string(auditfile.ID))
+	}
+
+	if _, ok := d.GetOk("audit_file_id"); ok {
+		d.Set("audit_file_id", ids[0])
 	} else {
-		d.Set("audit_file_id", "")
+		d.Set("audit_file_ids", ids)
 	}
 
 	d.SetId(string(policy.ID))
@@ -228,7 +242,6 @@ func buildScanPolicyInputs(d *schema.ResourceData) (*tenablesc.ScanPolicy, error
 	name := d.Get("name").(string)
 	description := d.Get("description").(string)
 	policyTemplateID := d.Get("policy_template_id").(string)
-	auditFileID := d.Get("audit_file_id").(string)
 	families := d.Get("families").(*schema.Set).List()
 	familiesState := d.Get("families_state").(string)
 	tag := d.Get("tag").(string)
@@ -280,9 +293,16 @@ func buildScanPolicyInputs(d *schema.ResourceData) (*tenablesc.ScanPolicy, error
 		spInput.Families = famInput
 	}
 
-	if auditFileID != "" {
-		spInput.AuditFiles = []tenablesc.BaseInfo{{ID: tenablesc.ProbablyString(auditFileID)}}
+	var auditFiles []tenablesc.BaseInfo
+	if v, ok := d.GetOk("audit_file_id"); ok {
+		auditFiles = append(auditFiles, tenablesc.BaseInfo{ID: tenablesc.ProbablyString(v.(string))})
+	} else if v, ok := d.GetOk("audit_file_ids"); ok {
+		for _, ID := range v.(*schema.Set).List() {
+			auditFiles = append(auditFiles, tenablesc.BaseInfo{ID: tenablesc.ProbablyString(ID.(string))})
+		}
 	}
+
+	spInput.AuditFiles = auditFiles
 
 	return spInput, nil
 }
