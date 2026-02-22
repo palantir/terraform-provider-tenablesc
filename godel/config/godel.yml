@@ -22,5 +22,6 @@ plugins:
         id: com.palantir.godel-generate-plugin:generate-plugin:1.42.0
         checksums:
           darwin-amd64: b650ff929e27452f8dc54c89b95b0a33bf315a138b8198a8f23ae2400fbe913c
+          darwin-arm64: 784dcb58cbdde130a40cdafc7c11caff8e77d1fea6094d4d18f4501dd7eb5db9
           linux-amd64: 12d9a5a54189568c088c188b8acefda267e8fcd615cd3a615b7e50f4fb2581db
           linux-arm64: b7d84c4fd6bb394cd3d602a337e46388bfa69536104c2d5aa0ccb2616e76a6b9
