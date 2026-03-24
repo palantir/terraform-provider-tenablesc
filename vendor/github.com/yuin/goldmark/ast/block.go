@@ -19,14 +19,6 @@ func (b *BaseBlock) Type() NodeType {
 	return TypeBlock
 }
 
-// Pos implements Node.Pos.
-func (b *BaseBlock) Pos() int {
-	if b.lines.Len() == 0 {
-		return -1
-	}
-	return b.lines.At(0).Start
-}
-
 // IsRaw implements Node.IsRaw.
 func (b *BaseBlock) IsRaw() bool {
 	return false
@@ -132,6 +124,14 @@ func (n *TextBlock) Dump(source []byte, level int) {
 	DumpHelper(n, source, level, nil, nil)
 }
 
+// Pos implements Node.Pos.
+func (n *TextBlock) Pos() int {
+	if n.lines.Len() == 0 {
+		return -1
+	}
+	return n.lines.At(0).Start
+}
+
 // KindTextBlock is a NodeKind of the TextBlock node.
 var KindTextBlock = NewNodeKind("TextBlock")
 
@@ -162,6 +162,14 @@ type Paragraph struct {
 // Dump implements Node.Dump .
 func (n *Paragraph) Dump(source []byte, level int) {
 	DumpHelper(n, source, level, nil, nil)
+}
+
+// Pos implements Node.Pos.
+func (n *Paragraph) Pos() int {
+	if n.lines.Len() == 0 {
+		return -1
+	}
+	return n.lines.At(0).Start
 }
 
 // KindParagraph is a NodeKind of the Paragraph node.
@@ -512,6 +520,7 @@ func (n *HTMLBlock) Dump(source []byte, level int) {
 	indent := strings.Repeat("    ", level)
 	fmt.Printf("%s%s {\n", indent, "HTMLBlock")
 	indent2 := strings.Repeat("    ", level+1)
+	fmt.Printf("%sPos: %d\n", indent2, n.Pos())
 	fmt.Printf("%sRawText: \"", indent2)
 	for i := range n.Lines().Len() {
 		s := n.Lines().At(i)
@@ -574,6 +583,14 @@ type LinkReferenceDefinition struct {
 // IsRaw implements Node.IsRaw.
 func (l *LinkReferenceDefinition) IsRaw() bool {
 	return true
+}
+
+// Pos implements Node.Pos.
+func (l *LinkReferenceDefinition) Pos() int {
+	if l.lines.Len() == 0 {
+		return -1
+	}
+	return l.lines.At(0).Start
 }
 
 // Dump implements Node.Dump.
