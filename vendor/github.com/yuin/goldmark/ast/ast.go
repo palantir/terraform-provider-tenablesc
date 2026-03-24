@@ -42,7 +42,7 @@ func NewNodeKind(name string) NodeKind {
 // An Attribute is an attribute of the Node.
 type Attribute struct {
 	Name  []byte
-	Value interface{}
+	Value any
 }
 
 // A Node interface defines basic AST node functionalities.
@@ -52,6 +52,10 @@ type Node interface {
 
 	// Kind returns a kind of this node.
 	Kind() NodeKind
+
+	// Pos returns a position of this node in a source.
+	// If this node position is not defined, Pos returns -1.
+	Pos() int
 
 	// NextSibling returns a next sibling node of this node.
 	NextSibling() Node
@@ -152,20 +156,20 @@ type Node interface {
 	IsRaw() bool
 
 	// SetAttribute sets the given value to the attributes.
-	SetAttribute(name []byte, value interface{})
+	SetAttribute(name []byte, value any)
 
 	// SetAttributeString sets the given value to the attributes.
-	SetAttributeString(name string, value interface{})
+	SetAttributeString(name string, value any)
 
 	// Attribute returns a (attribute value, true) if an attribute
 	// associated with the given name is found, otherwise
 	// (nil, false)
-	Attribute(name []byte) (interface{}, bool)
+	Attribute(name []byte) (any, bool)
 
 	// AttributeString returns a (attribute value, true) if an attribute
 	// associated with the given name is found, otherwise
 	// (nil, false)
-	AttributeString(name string) (interface{}, bool)
+	AttributeString(name string) (any, bool)
 
 	// Attributes returns a list of attributes.
 	// This may be a nil if there are no attributes.
@@ -397,7 +401,7 @@ func (n *BaseNode) Text(source []byte) []byte {
 }
 
 // SetAttribute implements Node.SetAttribute.
-func (n *BaseNode) SetAttribute(name []byte, value interface{}) {
+func (n *BaseNode) SetAttribute(name []byte, value any) {
 	if n.attributes == nil {
 		n.attributes = make([]Attribute, 0, 10)
 	} else {
@@ -413,12 +417,12 @@ func (n *BaseNode) SetAttribute(name []byte, value interface{}) {
 }
 
 // SetAttributeString implements Node.SetAttributeString.
-func (n *BaseNode) SetAttributeString(name string, value interface{}) {
+func (n *BaseNode) SetAttributeString(name string, value any) {
 	n.SetAttribute(util.StringToReadOnlyBytes(name), value)
 }
 
 // Attribute implements Node.Attribute.
-func (n *BaseNode) Attribute(name []byte) (interface{}, bool) {
+func (n *BaseNode) Attribute(name []byte) (any, bool) {
 	if n.attributes == nil {
 		return nil, false
 	}
@@ -431,7 +435,7 @@ func (n *BaseNode) Attribute(name []byte) (interface{}, bool) {
 }
 
 // AttributeString implements Node.AttributeString.
-func (n *BaseNode) AttributeString(s string) (interface{}, bool) {
+func (n *BaseNode) AttributeString(s string) (any, bool) {
 	return n.Attribute(util.StringToReadOnlyBytes(s))
 }
 
@@ -453,9 +457,10 @@ func DumpHelper(v Node, source []byte, level int, kv map[string]string, cb func(
 	indent := strings.Repeat("    ", level)
 	fmt.Printf("%s%s {\n", indent, name)
 	indent2 := strings.Repeat("    ", level+1)
+	fmt.Printf("%sPos: %d\n", indent2, v.Pos())
 	if v.Type() == TypeBlock {
 		fmt.Printf("%sRawText: \"", indent2)
-		for i := 0; i < v.Lines().Len(); i++ {
+		for i := range v.Lines().Len() {
 			line := v.Lines().At(i)
 			fmt.Printf("%s", line.Value(source))
 		}
