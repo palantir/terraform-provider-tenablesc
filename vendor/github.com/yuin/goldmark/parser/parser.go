@@ -985,13 +985,17 @@ retry:
 		if continuable && result == noBlocksOpened && !bp.CanInterruptParagraph() {
 			continue
 		}
+
 		if w > 3 && !bp.CanAcceptIndentedLine() {
 			continue
 		}
 		lastBlock = pc.LastOpenedBlock()
 		last := lastBlock.Node
+		_, blockPos := reader.Position()
 		node, state := bp.Open(parent, reader, pc)
 		if node != nil {
+			node.SetPos(blockPos.Start + max(pc.BlockOffset(), 0))
+
 			// Parser requires last node to be a paragraph.
 			// With table extension:
 			//

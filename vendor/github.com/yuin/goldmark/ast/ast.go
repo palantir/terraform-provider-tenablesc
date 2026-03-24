@@ -57,6 +57,11 @@ type Node interface {
 	// If this node position is not defined, Pos returns -1.
 	Pos() int
 
+	// SetPos sets a position of this node in a source.
+	// Some node may ignore this method. For example, Paragraph node ignores this method because
+	// it calculates its position from its lines.
+	SetPos(v int)
+
 	// NextSibling returns a next sibling node of this node.
 	NextSibling() Node
 
@@ -179,6 +184,23 @@ type Node interface {
 	RemoveAttributes()
 }
 
+type pos struct {
+	has   bool
+	value int
+}
+
+func (p *pos) Pos() int {
+	if p.has {
+		return p.value
+	}
+	return -1
+}
+
+func (p *pos) SetPos(v int) {
+	p.has = true
+	p.value = v
+}
+
 // A BaseNode struct implements the Node interface partialliy.
 type BaseNode struct {
 	firstChild Node
@@ -188,12 +210,23 @@ type BaseNode struct {
 	prev       Node
 	childCount int
 	attributes []Attribute
+	pos        pos
 }
 
 func ensureIsolated(v Node) {
 	if p := v.Parent(); p != nil {
 		p.RemoveChild(p, v)
 	}
+}
+
+// Pos implements Node.Pos .
+func (n *BaseNode) Pos() int {
+	return n.pos.Pos()
+}
+
+// SetPos implements Node.SetPos .
+func (n *BaseNode) SetPos(v int) {
+	n.pos.SetPos(v)
 }
 
 // HasChildren implements Node.HasChildren .

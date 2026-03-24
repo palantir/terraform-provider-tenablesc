@@ -11,28 +11,11 @@ import (
 // A BaseInline struct implements the Node interface partialliy.
 type BaseInline struct {
 	BaseNode
-
-	pos    int
-	hasPos bool
 }
 
 // Type implements Node.Type.
 func (b *BaseInline) Type() NodeType {
 	return TypeInline
-}
-
-// Pos implements Node.Pos.
-func (b *BaseInline) Pos() int {
-	if !b.hasPos {
-		return -1
-	}
-	return b.pos
-}
-
-// SetPos sets a position of this node.
-func (b *BaseInline) SetPos(pos int) {
-	b.pos = pos
-	b.hasPos = true
 }
 
 // IsRaw implements Node.IsRaw.
