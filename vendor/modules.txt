@@ -288,7 +288,7 @@ github.com/vmihailenco/msgpack/v5/msgpcode
 github.com/vmihailenco/tagparser/v2
 github.com/vmihailenco/tagparser/v2/internal
 github.com/vmihailenco/tagparser/v2/internal/parser
-# github.com/yuin/goldmark v1.8.1
+# github.com/yuin/goldmark v1.8.2
 ## explicit; go 1.22
 github.com/yuin/goldmark
 github.com/yuin/goldmark/ast
