@@ -410,7 +410,7 @@ google.golang.org/appengine/internal/datastore
 google.golang.org/appengine/internal/log
 google.golang.org/appengine/internal/modules
 google.golang.org/appengine/internal/remote_api
-# google.golang.org/genproto/googleapis/rpc v0.0.0-20260420184626-e10c466a9529
+# google.golang.org/genproto/googleapis/rpc v0.0.0-20260427160629-7cedc36a6bc4
 ## explicit; go 1.25.0
 google.golang.org/genproto/googleapis/rpc/status
 # google.golang.org/grpc v1.80.0
