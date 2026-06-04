@@ -2,7 +2,7 @@ module github.com/palantir/terraform-provider-tenablesc
 
 go 1.26.0
 
-toolchain go1.26.3
+toolchain go1.26.4
 
 require (
 	github.com/hashicorp/go-cty v1.5.0
