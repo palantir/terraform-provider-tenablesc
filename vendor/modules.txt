@@ -169,7 +169,7 @@ github.com/hashicorp/logutils
 ## explicit; go 1.25.0
 github.com/hashicorp/terraform-exec/internal/version
 github.com/hashicorp/terraform-exec/tfexec
-# github.com/hashicorp/terraform-json v0.27.3-0.20260213134036-298b8f6b673a
+# github.com/hashicorp/terraform-json v0.28.0
 ## explicit; go 1.21
 github.com/hashicorp/terraform-json
 # github.com/hashicorp/terraform-plugin-docs v0.25.0
