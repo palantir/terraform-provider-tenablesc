@@ -92,7 +92,7 @@ func ResourceRecastRisk() *schema.Resource {
 	}
 }
 
-func resourceRecastRiskCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceRecastRiskCreate(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 
 	sc := m.(*tenablesc.Client)
@@ -114,7 +114,7 @@ func resourceRecastRiskCreate(ctx context.Context, d *schema.ResourceData, m int
 	return resourceRecastRiskRead(ctx, d, m)
 }
 
-func resourceRecastRiskRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceRecastRiskRead(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 
 	sc := m.(*tenablesc.Client)
@@ -142,7 +142,7 @@ func resourceRecastRiskRead(ctx context.Context, d *schema.ResourceData, m inter
 	return nil
 }
 
-func resourceRecastRiskUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceRecastRiskUpdate(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 
 	deleteError := resourceRecastRiskDelete(ctx, d, m)
@@ -158,7 +158,7 @@ func resourceRecastRiskUpdate(ctx context.Context, d *schema.ResourceData, m int
 	return resourceRecastRiskRead(ctx, d, m)
 }
 
-func resourceRecastRiskDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceRecastRiskDelete(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 
 	sc := m.(*tenablesc.Client)

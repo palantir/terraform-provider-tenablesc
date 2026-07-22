@@ -61,7 +61,7 @@ func ResourceAuditFile() *schema.Resource {
 	}
 }
 
-func resourceAuditFileCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceAuditFileCreate(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
 
@@ -90,7 +90,7 @@ func resourceAuditFileCreate(ctx context.Context, d *schema.ResourceData, m inte
 	return resourceAuditFileRead(ctx, d, m)
 }
 
-func resourceAuditFileRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceAuditFileRead(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
 
@@ -117,7 +117,7 @@ func uploadNewAuditFile(sc *tenablesc.Client, name, content string) (string, err
 	return file.Filename, nil
 }
 
-func resourceAuditFileUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceAuditFileUpdate(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
 
@@ -157,7 +157,7 @@ func resourceAuditFileUpdate(ctx context.Context, d *schema.ResourceData, m inte
 	return resourceAuditFileRead(ctx, d, m)
 }
 
-func resourceAuditFileDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceAuditFileDelete(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
 

@@ -95,7 +95,7 @@ func ResourceRole() *schema.Resource {
 	return resource
 }
 
-func resourceRoleCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceRoleCreate(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 
 	sc := m.(*tenablesc.Client)
@@ -115,7 +115,7 @@ func resourceRoleCreate(ctx context.Context, d *schema.ResourceData, m interface
 	return resourceRoleRead(ctx, d, m)
 }
 
-func resourceRoleRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceRoleRead(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
 
@@ -141,7 +141,7 @@ func resourceRoleRead(ctx context.Context, d *schema.ResourceData, m interface{}
 	return nil
 }
 
-func resourceRoleUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceRoleUpdate(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 
 	sc := m.(*tenablesc.Client)
@@ -158,7 +158,7 @@ func resourceRoleUpdate(ctx context.Context, d *schema.ResourceData, m interface
 	return resourceRoleRead(ctx, d, m)
 }
 
-func resourceRoleDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceRoleDelete(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 
 	sc := m.(*tenablesc.Client)

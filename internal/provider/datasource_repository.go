@@ -38,7 +38,7 @@ func DataSourceRepository() *schema.Resource {
 	}
 }
 
-func dataSourceRepositoryRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func dataSourceRepositoryRead(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	sc := m.(*tenablesc.Client)
 
 	repoName := d.Get("name").(string)

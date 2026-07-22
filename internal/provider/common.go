@@ -72,16 +72,16 @@ func trace(skip int) (string, int, string) {
 	return file, line, fn.Name()
 }
 
-func Logf(level, message string, args ...interface{}) {
+func Logf(level, message string, args ...any) {
 	skipLogf(1, level, message, args...)
 }
 
-func skipLogf(skip int, level, message string, args ...interface{}) {
+func skipLogf(skip int, level, message string, args ...any) {
 	fileName, lineNumber, funcName := trace(skip + 1)
 
 	formattedMessage := fmt.Sprintf(message, args...)
 
-	for _, line := range strings.Split(formattedMessage, "\n") {
+	for line := range strings.SplitSeq(formattedMessage, "\n") {
 		log.Printf("[%s] %s:%d in %s, %s\n", level, fileName, lineNumber, funcName, line)
 	}
 }

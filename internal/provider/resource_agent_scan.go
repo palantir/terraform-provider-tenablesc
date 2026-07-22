@@ -96,7 +96,7 @@ func ResourceAgentScan() *schema.Resource {
 	}
 }
 
-func resourceAgentScanCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceAgentScanCreate(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	sc := m.(*tenablesc.Client)
 
 	agentScan, err := sc.CreateAgentScan(buildAgentScanInput(d))
@@ -111,7 +111,7 @@ func resourceAgentScanCreate(ctx context.Context, d *schema.ResourceData, m inte
 	return resourceAgentScanRead(ctx, d, m)
 }
 
-func resourceAgentScanRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceAgentScanRead(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	sc := m.(*tenablesc.Client)
 
 	agentScan, err := sc.GetAgentScan(d.Id())
@@ -142,7 +142,7 @@ func resourceAgentScanRead(ctx context.Context, d *schema.ResourceData, m interf
 	return nil
 }
 
-func resourceAgentScanUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceAgentScanUpdate(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	sc := m.(*tenablesc.Client)
 
 	scan, err := sc.UpdateAgentScan(buildAgentScanInput(d))
@@ -155,7 +155,7 @@ func resourceAgentScanUpdate(ctx context.Context, d *schema.ResourceData, m inte
 	return resourceAgentScanRead(ctx, d, m)
 }
 
-func resourceAgentScanDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceAgentScanDelete(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	sc := m.(*tenablesc.Client)
 
 	err := sc.DeleteAgentScan(d.Id())
@@ -173,7 +173,7 @@ func buildAgentScanInput(d *schema.ResourceData) *tenablesc.AgentScan {
 	policyID := d.Get("policy_id").(string)
 	scanWindow := d.Get("scan_window").(string)
 	nessusMangerID := d.Get("nessus_manager_id").(string)
-	agentGroupIDs := d.Get("agent_group_ids").([]interface{})
+	agentGroupIDs := d.Get("agent_group_ids").([]any)
 	emailOnLaunch := d.Get("email_on_launch").(bool)
 	emailOnFinish := d.Get("email_on_finish").(bool)
 	scheduleStart := d.Get("schedule_start").(string)
@@ -211,7 +211,7 @@ func buildAgentScanInput(d *schema.ResourceData) *tenablesc.AgentScan {
 
 	return scInput
 }
-func toAgentGroups(agentGroupsInterface []interface{}) []tenablesc.AgentGroup {
+func toAgentGroups(agentGroupsInterface []any) []tenablesc.AgentGroup {
 	var agentGroups []tenablesc.AgentGroup
 	for _, item := range agentGroupsInterface {
 		agentGroups = append(agentGroups, tenablesc.AgentGroup{BaseInfo: tenablesc.BaseInfo{

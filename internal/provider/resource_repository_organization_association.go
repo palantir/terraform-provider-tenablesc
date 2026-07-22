@@ -18,6 +18,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"slices"
 	"strconv"
 
 	"github.com/hashicorp/go-cty/cty"
@@ -67,7 +68,7 @@ func ResourceRepositoryOrganizationAssociation() *schema.Resource {
 	}
 }
 
-func resourceRepositoryOrganizationAssociationCreateOrUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceRepositoryOrganizationAssociationCreateOrUpdate(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 
 	sc := m.(*tenablesc.Client)
@@ -87,7 +88,7 @@ func resourceRepositoryOrganizationAssociationCreateOrUpdate(ctx context.Context
 	return resourceRepositoryOrganizationAssociationRead(ctx, d, m)
 }
 
-func resourceRepositoryOrganizationAssociationRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceRepositoryOrganizationAssociationRead(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
 
@@ -100,9 +101,9 @@ func resourceRepositoryOrganizationAssociationRead(ctx context.Context, d *schem
 
 	d.SetId(string(repository.ID))
 
-	organizations := make([]map[string]interface{}, 0)
+	organizations := make([]map[string]any, 0)
 	for _, ro := range repository.Organizations {
-		org := make(map[string]interface{})
+		org := make(map[string]any)
 
 		orgIDInt, err := strconv.ParseInt(ro.ID, 10, 32)
 		if err != nil {
@@ -118,7 +119,7 @@ func resourceRepositoryOrganizationAssociationRead(ctx context.Context, d *schem
 	return nil
 }
 
-func resourceRepositoryOrganizationAssociationDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceRepositoryOrganizationAssociationDelete(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	sc := m.(*tenablesc.Client)
 
 	repositoryAssociation := &tenablesc.Repository{
@@ -140,7 +141,7 @@ func resourceRepositoryOrganizationAssociationDelete(ctx context.Context, d *sch
 func buildRepositoryOrganizationAssociationInputs(d *schema.ResourceData) (*tenablesc.Repository, error) {
 
 	repoID := d.Id()
-	organizations := d.Get("organization").([]interface{})
+	organizations := d.Get("organization").([]any)
 
 	repositoryAssociation := &tenablesc.Repository{
 		RepoBaseFields: tenablesc.RepoBaseFields{
@@ -153,7 +154,7 @@ func buildRepositoryOrganizationAssociationInputs(d *schema.ResourceData) (*tena
 	var repoOrgs []tenablesc.RepoOrganization
 
 	for _, org := range organizations {
-		org := org.(map[string]interface{})
+		org := org.(map[string]any)
 
 		id, ok := org["organization_id"]
 		if !ok {
@@ -190,13 +191,11 @@ var validGroupAssignments = []string{
 	"partial",
 }
 
-func validateGroupAssignment(i interface{}, path cty.Path) diag.Diagnostics {
+func validateGroupAssignment(i any, path cty.Path) diag.Diagnostics {
 
 	if i, ok := i.(string); ok {
-		for _, v := range validGroupAssignments {
-			if i == v {
-				return nil
-			}
+		if slices.Contains(validGroupAssignments, i) {
+			return nil
 		}
 	}
 

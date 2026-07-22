@@ -38,7 +38,7 @@ func DataSourceCredential() *schema.Resource {
 	}
 }
 
-func dataSourceCredentialRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func dataSourceCredentialRead(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	sc := m.(*tenablesc.Client)
 
 	credentialName := d.Get("name").(string)

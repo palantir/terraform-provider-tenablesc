@@ -57,7 +57,7 @@ func ResourceScanZone() *schema.Resource {
 	}
 }
 
-func resourceScanZoneCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceScanZoneCreate(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
 
@@ -71,7 +71,7 @@ func resourceScanZoneCreate(ctx context.Context, d *schema.ResourceData, m inter
 	return resourceScanZoneRead(ctx, d, m)
 }
 
-func resourceScanZoneRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceScanZoneRead(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
 
@@ -91,7 +91,7 @@ func resourceScanZoneRead(ctx context.Context, d *schema.ResourceData, m interfa
 	return nil
 }
 
-func resourceScanZoneUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceScanZoneUpdate(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
 
@@ -103,7 +103,7 @@ func resourceScanZoneUpdate(ctx context.Context, d *schema.ResourceData, m inter
 	return resourceScanZoneRead(ctx, d, m)
 }
 
-func resourceScanZoneDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceScanZoneDelete(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
 
