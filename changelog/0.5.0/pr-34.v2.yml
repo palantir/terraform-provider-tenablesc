@@ -1,6 +1,0 @@
-type: fix
-fix:
-  description: "apply proper protocol mapping for accept/recast rules\n\n### Overview:\nResolves:
-    #27 \n\n### Changes:\nApply proper protocol mapping for accept/recast rules."
-  links:
-  - https://github.com/palantir/terraform-provider-tenablesc/pull/34
