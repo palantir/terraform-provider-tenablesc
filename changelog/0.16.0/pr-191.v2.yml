@@ -1,5 +1,0 @@
-type: improvement
-improvement:
-  description: Enable managing agent scans
-  links:
-  - https://github.com/palantir/terraform-provider-tenablesc/pull/191
