@@ -30,11 +30,11 @@ locals {
 }
 
 
-data "sc_scan_policy_template" "advanced" {
+data "tenablesc_scan_policy_template" "advanced" {
   name = "Advanced Scan"
 }
 
-resource "sc_scan_policy" "vulnerability_scan_port22" {
+resource "tenablesc_scan_policy" "vulnerability_scan_port22" {
   name               = "TF Vulnerability - Ubuntu, CentOS, RHEL (port 22)"
   policy_template_id = data.sc_scan_policy_template.advanced.id
   families           = local.os_vulnerability_families
