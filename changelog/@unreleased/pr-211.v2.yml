@@ -1,0 +1,5 @@
+type: improvement
+improvement:
+  description: Handle case where no agent group exists
+  links:
+  - https://github.com/palantir/terraform-provider-tenablesc/pull/211
