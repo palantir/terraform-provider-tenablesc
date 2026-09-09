@@ -341,7 +341,7 @@ golang.org/x/crypto/hkdf
 golang.org/x/crypto/pbkdf2
 golang.org/x/crypto/scrypt
 golang.org/x/crypto/sha3
-# golang.org/x/exp v0.0.0-20260824195058-e88cd73687aa
+# golang.org/x/exp v0.0.0-20260908205506-85c1c2202aba
 ## explicit; go 1.26.0
 golang.org/x/exp/slices
 # golang.org/x/mod v0.41.0
