@@ -18,6 +18,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"slices"
 	"strings"
 
 	"github.com/hashicorp/go-cty/cty"
@@ -73,7 +74,7 @@ func ResourceOrganization() *schema.Resource {
 	}
 }
 
-func resourceOrganizationCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceOrganizationCreate(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
 
@@ -91,7 +92,7 @@ func resourceOrganizationCreate(ctx context.Context, d *schema.ResourceData, m i
 	return resourceOrganizationRead(ctx, d, m)
 }
 
-func resourceOrganizationRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceOrganizationRead(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
 
@@ -117,7 +118,7 @@ func resourceOrganizationRead(ctx context.Context, d *schema.ResourceData, m int
 	return nil
 }
 
-func resourceOrganizationUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceOrganizationUpdate(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
 
@@ -134,7 +135,7 @@ func resourceOrganizationUpdate(ctx context.Context, d *schema.ResourceData, m i
 	return resourceOrganizationRead(ctx, d, m)
 }
 
-func resourceOrganizationDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceOrganizationDelete(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
 
@@ -153,11 +154,9 @@ func buildOrgInputs(d *schema.ResourceData) (*tenablesc.Organization, diag.Diagn
 	description := d.Get("description").(string)
 
 	org := &tenablesc.Organization{
-		BaseInfo: tenablesc.BaseInfo{
-			ID:          tenablesc.ProbablyString(d.Id()),
-			Name:        name,
-			Description: description,
-		},
+		ID:                tenablesc.ProbablyString(d.Id()),
+		Name:              name,
+		Description:       description,
 		VulnScoringSystem: "CVSSv3", // Hardcoded until we have a reason not to.
 	}
 
@@ -219,12 +218,10 @@ var validZoneSelectors = []string{
 	"selectable+auto_restricted",
 }
 
-func validateZoneSelection(i interface{}, path cty.Path) diag.Diagnostics {
+func validateZoneSelection(i any, path cty.Path) diag.Diagnostics {
 	if selection, ok := i.(string); ok {
-		for _, v := range validZoneSelectors {
-			if selection == v {
-				return nil
-			}
+		if slices.Contains(validZoneSelectors, selection) {
+			return nil
 		}
 		return diag.Errorf("%s is not a valid zone selector. Valid selectors are %v", selection, validZoneSelectors)
 	}

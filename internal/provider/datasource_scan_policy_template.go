@@ -38,7 +38,7 @@ func DataSourceScanPolicyTemplate() *schema.Resource {
 	}
 }
 
-func dataSourceScanPolicyTemplateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func dataSourceScanPolicyTemplateRead(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	sc := m.(*tenablesc.Client)
 	name := d.Get("name").(string)
 
