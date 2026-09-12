@@ -36,7 +36,7 @@ func DataSourcePlugin() *schema.Resource {
 	}
 }
 
-func dataSourcePluginRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func dataSourcePluginRead(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	pluginName := d.Get("name").(string)
 
 	Logf(logDebug, "looking up %s", pluginName)
