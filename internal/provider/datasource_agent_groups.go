@@ -50,7 +50,7 @@ func DataSourceAgentGroups() *schema.Resource {
 	}
 }
 
-func dataSourceAgentGroupsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func dataSourceAgentGroupsRead(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	sc := m.(*tenablesc.Client)
 
 	Logf(logDebug, "looking up all agent groups")
@@ -77,7 +77,7 @@ func dataSourceAgentGroupsRead(ctx context.Context, d *schema.ResourceData, m in
 		return diag.FromErr(err)
 	}
 
-	filteredAgentGroups := make(map[string]interface{})
+	filteredAgentGroups := make(map[string]any)
 	for _, agentGroup := range agentGroups {
 		if nameRE.MatchString(agentGroup.Name) {
 			filteredAgentGroups[string(agentGroup.ID)] = agentGroup.Name

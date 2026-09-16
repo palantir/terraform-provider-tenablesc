@@ -96,7 +96,7 @@ func ResourceScanPolicy() *schema.Resource {
 	}
 }
 
-func resourceScanPolicyCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceScanPolicyCreate(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 
 	sc := m.(*tenablesc.Client)
@@ -117,7 +117,7 @@ func resourceScanPolicyCreate(ctx context.Context, d *schema.ResourceData, m int
 	return resourceScanPolicyRead(ctx, d, m)
 }
 
-func resourceScanPolicyRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceScanPolicyRead(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 
 	sc := m.(*tenablesc.Client)
@@ -168,7 +168,7 @@ func resourceScanPolicyRead(ctx context.Context, d *schema.ResourceData, m inter
 	return nil
 }
 
-func resourceScanPolicyUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceScanPolicyUpdate(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 
 	sc := m.(*tenablesc.Client)
@@ -185,7 +185,7 @@ func resourceScanPolicyUpdate(ctx context.Context, d *schema.ResourceData, m int
 	return resourceScanPolicyRead(ctx, d, m)
 }
 
-func resourceScanPolicyDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceScanPolicyDelete(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 
 	sc := m.(*tenablesc.Client)
@@ -200,9 +200,9 @@ func resourceScanPolicyDelete(ctx context.Context, d *schema.ResourceData, m int
 
 // marshalPreferenceMap renders a map that contains actual data structures in to a map[string]string.
 // returning map[string]interface{} because TF underpinnings expect it.
-func marshalPreferenceMap(m map[string]interface{}) (map[string]interface{}, error) {
+func marshalPreferenceMap(m map[string]any) (map[string]any, error) {
 
-	marshalled := make(map[string]interface{})
+	marshalled := make(map[string]any)
 
 	for k, v := range m {
 		if vs, ok := v.(string); ok {
@@ -220,9 +220,9 @@ func marshalPreferenceMap(m map[string]interface{}) (map[string]interface{}, err
 }
 
 // unmarshalPreferencesMap renders a map containing jsonified array values into their native structures.
-func unmarshalPreferencesMap(m map[string]interface{}) (map[string]interface{}, error) {
+func unmarshalPreferencesMap(m map[string]any) (map[string]any, error) {
 
-	unmarshalled := make(map[string]interface{})
+	unmarshalled := make(map[string]any)
 
 	for k, v := range m {
 		var unmarshalledArray []string
@@ -268,11 +268,9 @@ func buildScanPolicyInputs(d *schema.ResourceData) (*tenablesc.ScanPolicy, error
 	}
 
 	spInput := &tenablesc.ScanPolicy{
-		BaseInfo: tenablesc.BaseInfo{
-			ID:          tenablesc.ProbablyString(d.Id()),
-			Name:        name,
-			Description: description,
-		},
+		ID:             tenablesc.ProbablyString(d.Id()),
+		Name:           name,
+		Description:    description,
 		Tags:           tag,
 		PolicyTemplate: &tenablesc.BaseInfo{ID: tenablesc.ProbablyString(policyTemplateID)},
 	}

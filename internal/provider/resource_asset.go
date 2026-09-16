@@ -63,7 +63,7 @@ func ResourceAsset() *schema.Resource {
 	}
 }
 
-func resourceAssetCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceAssetCreate(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
 
@@ -79,7 +79,7 @@ func resourceAssetCreate(ctx context.Context, d *schema.ResourceData, m interfac
 	return resourceAssetRead(ctx, d, m)
 }
 
-func resourceAssetRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceAssetRead(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
 
@@ -104,7 +104,7 @@ func resourceAssetRead(ctx context.Context, d *schema.ResourceData, m interface{
 	return nil
 }
 
-func resourceAssetUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceAssetUpdate(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
 
@@ -116,7 +116,7 @@ func resourceAssetUpdate(ctx context.Context, d *schema.ResourceData, m interfac
 	return resourceAssetRead(ctx, d, m)
 }
 
-func resourceAssetDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceAssetDelete(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
 
@@ -137,12 +137,10 @@ func buildAssetInput(d *schema.ResourceData) *tenablesc.Asset {
 	values := d.Get("values").(*schema.Set)
 
 	assetInput := &tenablesc.Asset{
-		BaseInfo: tenablesc.BaseInfo{
-			ID:          tenablesc.ProbablyString(d.Id()),
-			Name:        name,
-			Description: description,
-		},
-		Type: assetType,
+		ID:          tenablesc.ProbablyString(d.Id()),
+		Name:        name,
+		Description: description,
+		Type:        assetType,
 	}
 
 	var assetList []string

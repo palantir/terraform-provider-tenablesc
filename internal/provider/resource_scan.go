@@ -111,7 +111,7 @@ func ResourceScan() *schema.Resource {
 	}
 }
 
-func resourceScanCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceScanCreate(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 
 	sc := m.(*tenablesc.Client)
@@ -126,7 +126,7 @@ func resourceScanCreate(ctx context.Context, d *schema.ResourceData, m interface
 	return resourceScanRead(ctx, d, m)
 }
 
-func resourceScanRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceScanRead(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
 
@@ -165,7 +165,7 @@ func resourceScanRead(ctx context.Context, d *schema.ResourceData, m interface{}
 	return nil
 }
 
-func resourceScanUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceScanUpdate(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
 
@@ -179,7 +179,7 @@ func resourceScanUpdate(ctx context.Context, d *schema.ResourceData, m interface
 	return resourceScanRead(ctx, d, m)
 }
 
-func resourceScanDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceScanDelete(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
 
@@ -202,17 +202,15 @@ func buildScanInputs(d *schema.ResourceData) *tenablesc.Scan {
 	maxScanTime := d.Get("max_scan_time").(string)
 	inactivityTimeout := d.Get("inactivity_timeout").(string)
 	ipsNames := d.Get("ips_and_names").(string)
-	assetIDs := d.Get("asset_ids").([]interface{})
-	credentialIDs := d.Get("credential_ids").([]interface{})
+	assetIDs := d.Get("asset_ids").([]any)
+	credentialIDs := d.Get("credential_ids").([]any)
 	scheduleStart := d.Get("schedule_start").(string)
 	scheduleRepeatRule := d.Get("schedule_repeat_rule").(string)
 
 	scInput := &tenablesc.Scan{
-		BaseInfo: tenablesc.BaseInfo{
-			ID:          tenablesc.ProbablyString(d.Id()),
-			Name:        name,
-			Description: description,
-		},
+		ID:          tenablesc.ProbablyString(d.Id()),
+		Name:        name,
+		Description: description,
 
 		Type:                 "policy",
 		Policy:               &tenablesc.BaseInfo{ID: tenablesc.ProbablyString(policyID)},
@@ -248,7 +246,7 @@ func buildScanInputs(d *schema.ResourceData) *tenablesc.Scan {
 	return scInput
 }
 
-func bundleIDs(ids []interface{}) []tenablesc.BaseInfo {
+func bundleIDs(ids []any) []tenablesc.BaseInfo {
 	var processedIDs []tenablesc.BaseInfo
 	for _, id := range ids {
 		obj := tenablesc.BaseInfo{ID: tenablesc.ProbablyString(id.(string))}
