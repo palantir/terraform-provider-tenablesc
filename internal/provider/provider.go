@@ -74,7 +74,7 @@ func Provider() *schema.Provider {
 	}
 }
 
-func configureProvider(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
+func configureProvider(ctx context.Context, d *schema.ResourceData) (any, diag.Diagnostics) {
 	accessKey := d.Get("access_key").(string)
 	secretKey := d.Get("secret_key").(string)
 	scURI := d.Get("uri").(string)

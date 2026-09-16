@@ -45,7 +45,7 @@ func DataSourceAssets() *schema.Resource {
 	}
 }
 
-func dataSourceAssetsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func dataSourceAssetsRead(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	sc := m.(*tenablesc.Client)
 
 	Logf(logDebug, "looking up all assets")
@@ -57,7 +57,7 @@ func dataSourceAssetsRead(ctx context.Context, d *schema.ResourceData, m interfa
 
 	Logf(logDebug, "response: %+v", allAssets)
 
-	assets := make(map[string]interface{})
+	assets := make(map[string]any)
 
 	nameFilter := d.Get("name_filter").(string)
 

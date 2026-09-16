@@ -101,7 +101,7 @@ func ResourceAcceptRisk() *schema.Resource {
 	}
 }
 
-func resourceAcceptRiskCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceAcceptRiskCreate(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 
 	sc := m.(*tenablesc.Client)
@@ -120,13 +120,11 @@ func resourceAcceptRiskCreate(ctx context.Context, d *schema.ResourceData, m int
 	}
 
 	rule := &tenablesc.AcceptRiskRule{
-		AcceptRiskRuleBaseFields: tenablesc.AcceptRiskRuleBaseFields{
-			Plugin:   &tenablesc.BaseInfo{ID: tenablesc.ProbablyString(pluginID)},
-			HostType: hostType,
-			Port:     port,
-			Protocol: protocol,
-			Comments: comments,
-		},
+		Plugin:     &tenablesc.BaseInfo{ID: tenablesc.ProbablyString(pluginID)},
+		HostType:   hostType,
+		Port:       port,
+		Protocol:   protocol,
+		Comments:   comments,
 		Repository: &tenablesc.BaseInfo{ID: tenablesc.ProbablyString(repositoryID)},
 		HostValue:  hostValue,
 	}
@@ -152,7 +150,7 @@ func resourceAcceptRiskCreate(ctx context.Context, d *schema.ResourceData, m int
 	return resourceAcceptRiskRead(ctx, d, m)
 }
 
-func resourceAcceptRiskRead(ctx context.Context, d *schema.ResourceData, m interface{}) (diags diag.Diagnostics) {
+func resourceAcceptRiskRead(ctx context.Context, d *schema.ResourceData, m any) (diags diag.Diagnostics) {
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
 
@@ -201,7 +199,7 @@ func resourceAcceptRiskRead(ctx context.Context, d *schema.ResourceData, m inter
 	return
 }
 
-func resourceAcceptRiskUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceAcceptRiskUpdate(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 	deleteError := resourceAcceptRiskDelete(ctx, d, m)
 	if deleteError != nil {
@@ -216,7 +214,7 @@ func resourceAcceptRiskUpdate(ctx context.Context, d *schema.ResourceData, m int
 	return resourceAcceptRiskRead(ctx, d, m)
 }
 
-func resourceAcceptRiskDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceAcceptRiskDelete(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
 

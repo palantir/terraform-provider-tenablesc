@@ -50,7 +50,7 @@ func DataSourceAsset() *schema.Resource {
 	}
 }
 
-func dataSourceAssetRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func dataSourceAssetRead(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	sc := m.(*tenablesc.Client)
 	assetName := d.Get("name").(string)
 

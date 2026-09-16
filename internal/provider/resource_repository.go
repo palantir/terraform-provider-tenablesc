@@ -95,7 +95,7 @@ func ResourceRepository() *schema.Resource {
 
 }
 
-func resourceRepositoryCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceRepositoryCreate(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 
 	sc := m.(*tenablesc.Client)
@@ -110,7 +110,7 @@ func resourceRepositoryCreate(ctx context.Context, d *schema.ResourceData, m int
 	return resourceRepositoryRead(ctx, d, m)
 }
 
-func resourceRepositoryRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceRepositoryRead(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 
 	sc := m.(*tenablesc.Client)
@@ -130,7 +130,7 @@ func resourceRepositoryRead(ctx context.Context, d *schema.ResourceData, m inter
 	d.Set("trending_days", repository.TrendingDays)
 	d.Set("trend_with_raw", repository.TrendWithRaw.AsBool())
 
-	vulnLifetimes := make(map[string]interface{})
+	vulnLifetimes := make(map[string]any)
 
 	if repository.ComplianceVulnsLifetime != "" {
 		v, err := strconv.ParseInt(repository.ComplianceVulnsLifetime, 10, 32)
@@ -171,7 +171,7 @@ func resourceRepositoryRead(ctx context.Context, d *schema.ResourceData, m inter
 	return nil
 }
 
-func resourceRepositoryDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceRepositoryDelete(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 
 	sc := m.(*tenablesc.Client)
@@ -184,7 +184,7 @@ func resourceRepositoryDelete(ctx context.Context, d *schema.ResourceData, m int
 	return nil
 }
 
-func resourceRepositoryUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceRepositoryUpdate(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
 
@@ -220,9 +220,9 @@ func buildRepoInputs(d *schema.ResourceData) *tenablesc.Repository {
 	repo.TrendWithRaw = tenablesc.ToFakeBool(d.Get("trend_with_raw").(bool))
 
 	if vulnLifetimes, ok := d.GetOk("vulnerability_lifetimes"); ok {
-		vulnLifetimes := vulnLifetimes.([]interface{})
+		vulnLifetimes := vulnLifetimes.([]any)
 		if len(vulnLifetimes) > 0 {
-			vulnLifetimes := vulnLifetimes[0].(map[string]interface{})
+			vulnLifetimes := vulnLifetimes[0].(map[string]any)
 
 			if v, ok := vulnLifetimes["active_days"]; ok {
 				repo.ActiveVulnsLifetime = strconv.Itoa(v.(int))

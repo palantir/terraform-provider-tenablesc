@@ -51,7 +51,7 @@ func ResourceOrganizationScanZoneAssociation() *schema.Resource {
 	}
 }
 
-func resourceOrganizationScanZoneAssociationCreateOrUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceOrganizationScanZoneAssociationCreateOrUpdate(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
 
@@ -70,7 +70,7 @@ func resourceOrganizationScanZoneAssociationCreateOrUpdate(ctx context.Context, 
 	return resourceOrganizationScanZoneAssociationRead(ctx, d, m)
 }
 
-func resourceOrganizationScanZoneAssociationRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceOrganizationScanZoneAssociationRead(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
 
@@ -103,15 +103,15 @@ func resourceOrganizationScanZoneAssociationRead(ctx context.Context, d *schema.
 	return nil
 }
 
-func resourceOrganizationScanZoneAssociationDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceOrganizationScanZoneAssociationDelete(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	Logf(logTrace, "start of function")
 	sc := m.(*tenablesc.Client)
 
 	id := d.Id()
 
 	orgAssociation := &tenablesc.Organization{
-		BaseInfo: tenablesc.BaseInfo{ID: tenablesc.ProbablyString(id)},
-		Zones:    []tenablesc.BaseInfo{},
+		ID:    tenablesc.ProbablyString(id),
+		Zones: []tenablesc.BaseInfo{},
 	}
 
 	_, err := sc.UpdateOrganization(orgAssociation)
@@ -127,8 +127,8 @@ func buildOrganizationScanZoneAssociationInputs(d *schema.ResourceData) (*tenabl
 	zones := d.Get("scan_zone_ids").(*schema.Set)
 
 	orgAssociation := &tenablesc.Organization{
-		BaseInfo: tenablesc.BaseInfo{ID: tenablesc.ProbablyString(orgID)},
-		Zones:    []tenablesc.BaseInfo{},
+		ID:    tenablesc.ProbablyString(orgID),
+		Zones: []tenablesc.BaseInfo{},
 	}
 
 	for _, i := range zones.List() {

@@ -45,7 +45,7 @@ func DataSourceRepositories() *schema.Resource {
 	}
 }
 
-func dataSourceRepositoriesRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func dataSourceRepositoriesRead(ctx context.Context, d *schema.ResourceData, m any) diag.Diagnostics {
 	sc := m.(*tenablesc.Client)
 
 	Logf(logDebug, "looking up all repositories")
@@ -57,7 +57,7 @@ func dataSourceRepositoriesRead(ctx context.Context, d *schema.ResourceData, m i
 
 	Logf(logDebug, "response: %+v", repos)
 
-	repositories := make(map[string]interface{})
+	repositories := make(map[string]any)
 
 	nameFilter := d.Get("name_filter").(string)
 
