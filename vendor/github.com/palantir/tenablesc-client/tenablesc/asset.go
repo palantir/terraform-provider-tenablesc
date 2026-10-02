@@ -46,10 +46,10 @@ type assetResponse struct {
 	TypeFields struct {
 		DefinedDNSNames string `json:"definedDNSNames,omitempty"`
 		DefinedIPs      string `json:"definedIPs,omitempty"`
-	} `json:"typeFields,omitempty"`
+	} `json:"typeFields"`
 	Repositories []struct {
 		IPCount    string     `json:"ipCount,omitempty"`
-		Repository Repository `json:"repository,omitempty"`
+		Repository Repository `json:"repository"`
 	} `json:"repositories,omitempty"`
 }
 

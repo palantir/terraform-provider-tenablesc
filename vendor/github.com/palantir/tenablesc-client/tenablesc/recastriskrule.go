@@ -22,9 +22,9 @@ const (
 //	 to and from the API structures.
 type RecastRiskRuleBaseFields struct {
 	ID           string   `json:"id,omitempty"`
-	Organization BaseInfo `json:"organization,omitempty"`
-	User         UserInfo `json:"user,omitempty"`
-	Plugin       BaseInfo `json:"plugin,omitempty"`
+	Organization BaseInfo `json:"organization"`
+	User         UserInfo `json:"user"`
+	Plugin       BaseInfo `json:"plugin"`
 	// HostType may be 'all', 'asset', 'ip', or 'uuid'
 	HostType     string              `json:"hostType,omitempty"`
 	Port         string              `json:"port,omitempty"`
@@ -42,7 +42,7 @@ type recastRiskRuleInternal struct {
 	// RRR takes a list of repositories for writing rules.
 	// It however only returns a single repository.
 	NewSeverity  json.RawMessage `json:"newSeverity,omitempty"`
-	Repository   BaseInfo        `json:"repository,omitempty"`
+	Repository   BaseInfo        `json:"repository"`
 	Repositories []BaseInfo      `json:"repositories,omitempty"`
 	HostValue    json.RawMessage `json:"hostValue,omitempty"`
 }

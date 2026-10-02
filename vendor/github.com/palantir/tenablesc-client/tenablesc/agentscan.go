@@ -10,8 +10,8 @@ const agentGroupsEndpoint = "/agentGroup/%s/remote"
 // AgentScan is the fields renderable to and from the API for https://docs.tenable.com/tenablesc/api/Agent-Scan.htm
 type AgentScan struct {
 	BaseInfo
-	Repository    BaseInfo       `json:"repository,omitempty"`
-	NessusManager BaseInfo       `json:"nessusManager,omitempty"`
+	Repository    BaseInfo       `json:"repository"`
+	NessusManager BaseInfo       `json:"nessusManager"`
 	ScanWindow    ProbablyString `json:"scanWindow,omitempty"`
 	AgentGroups   []AgentGroup   `json:"agentGroups,omitempty"`
 	Type          string         `json:"type,omitempty"`

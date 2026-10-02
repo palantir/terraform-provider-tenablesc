@@ -13,9 +13,9 @@ type Job struct {
 	DependentJobID ProbablyString `json:"dependentJobID,omitempty"`
 	ErrorCode      ProbablyString `json:"errorCode,omitempty"`
 	ImmediateJob   FakeBool       `json:"immediateJob,omitempty"`
-	Initiator      UserInfo       `json:"initiator,omitempty"`
+	Initiator      UserInfo       `json:"initiator"`
 	ObjectID       ProbablyString `json:"objectID,omitempty"`
-	Organization   BaseInfo       `json:"organization,omitempty"`
+	Organization   BaseInfo       `json:"organization"`
 	Params         string         `json:"params,omitempty"`
 	Pid            ProbablyString `json:"pid,omitempty"`
 	Priority       ProbablyString `json:"priority,omitempty"`

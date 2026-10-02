@@ -24,11 +24,11 @@ var pkzipFileSignature = []byte{'\x50', '\x4b', '\x03', '\x04'}
 type ScanResult struct {
 	BaseInfo
 	Status                 string         `json:"status,omitempty"`
-	Initiator              UserInfo       `json:"initiator,omitempty"`
-	Owner                  UserInfo       `json:"owner,omitempty"`
-	OwnerGroup             BaseInfo       `json:"ownerGroup,omitempty"`
-	Repository             BaseInfo       `json:"repository,omitempty"`
-	Scan                   BaseInfo       `json:"scan,omitempty"`
+	Initiator              UserInfo       `json:"initiator"`
+	Owner                  UserInfo       `json:"owner"`
+	OwnerGroup             BaseInfo       `json:"ownerGroup"`
+	Repository             BaseInfo       `json:"repository"`
+	Scan                   BaseInfo       `json:"scan"`
 	ImportStatus           string         `json:"importStatus,omitempty"`
 	ImportStart            ProbablyString `json:"importStart,omitempty"`
 	ImportFinish           ProbablyString `json:"importFinish,omitempty"`
@@ -49,7 +49,7 @@ type ScanResult struct {
 	TotalChecks            ProbablyString `json:"totalChecks,omitempty"`
 	AgentScanUUID          string         `json:"agentScanUUID,omitempty"`
 	AgentScanContainerUUID string         `json:"agentScanContainerUUID,omitempty"`
-	Job                    BaseInfo       `json:"job,omitempty"`
+	Job                    BaseInfo       `json:"job"`
 	Details                string         `json:"details,omitempty"`
 }
 
