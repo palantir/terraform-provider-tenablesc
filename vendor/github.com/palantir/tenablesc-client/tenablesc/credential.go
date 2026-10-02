@@ -109,17 +109,15 @@ const (
 // AddPostgresDBCredential creates a new postgres db credential
 func (c *Client) AddPostgresDBCredential(credName, username, password, description, dbName, port string) (*Credential, error) {
 	newPostgresDBCredential := DBCredentialUpload{
-		BaseInfo: BaseInfo{
-			Name:        credName,
-			Description: description,
-		},
-		Type:     databaseType,
-		AuthType: passwordAuthType,
-		Login:    username,
-		Password: password,
-		SID:      dbName,
-		DBType:   postgresDBType,
-		Port:     port,
+		Name:        credName,
+		Description: description,
+		Type:        databaseType,
+		AuthType:    passwordAuthType,
+		Login:       username,
+		Password:    password,
+		SID:         dbName,
+		DBType:      postgresDBType,
+		Port:        port,
 	}
 
 	resp := &Credential{}

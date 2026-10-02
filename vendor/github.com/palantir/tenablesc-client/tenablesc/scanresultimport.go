@@ -9,7 +9,7 @@ const scanResultImportEndpoint = "/scanResult/import"
 // ScanResultImport represents the request/response structure from the import endpoint of https://docs.tenable.com/tenablesc/api/Scan-Result.htm
 type ScanResultImport struct {
 	Filename             string   `json:"filename,omitempty"`
-	Repository           BaseInfo `json:"repository,omitempty"`
+	Repository           BaseInfo `json:"repository"`
 	ClassifyMitigatedAge string   `json:"classifyMitigatedAge,omitempty"`
 	DHCPTracking         FakeBool `json:"dhcpTracking,omitempty"`
 	ScanningVirtualHosts FakeBool `json:"scanningVirtualHosts,omitempty"`
@@ -19,7 +19,7 @@ type ScanResultImport struct {
 
 func (c *Client) ImportScanResult(resultImport *ScanResultImport) error {
 
-	var resp interface{} // Guess what! the response object is _empty_!
+	var resp any // Guess what! the response object is _empty_!
 
 	_, err := c.postResource(scanResultImportEndpoint, resultImport, resp)
 

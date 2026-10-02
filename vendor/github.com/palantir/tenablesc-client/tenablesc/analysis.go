@@ -15,7 +15,7 @@ const (
 // Note some fields are used only for certain combinations of type and sourcetype.
 type Analysis struct {
 	Type          string        `json:"type,omitempty"`
-	Query         AnalysisQuery `json:"query,omitempty"`
+	Query         AnalysisQuery `json:"query"`
 	SourceType    string        `json:"sourceType,omitempty"`
 	SortField     string        `json:"sortField,omitempty"`
 	SortDirection string        `json:"sortDir,omitempty"`
@@ -50,7 +50,7 @@ type AnalysisFilter struct {
 	FilterName string `json:"filterName"`
 	Operator   string `json:"operator"`
 	// Value is sometimes a string, sometimes a number, sometimes a BaseInfo (with ID only generally)
-	Value interface{} `json:"value"`
+	Value any `json:"value"`
 }
 
 // AnalysisResponseContainer is the output structure produced by an Analyze query.
@@ -192,7 +192,7 @@ type VulnRepository struct {
 // Analyze takes an arbitrary Analysis query, determines the expected container object, and writes to
 // the resultsContainer expecting it to be the correct type.
 // The partially-unmarshalled response is returned as well for metadata purposes.
-func (c *Client) Analyze(a *Analysis, resultsContainer interface{}) (*AnalysisResponseContainer, error) {
+func (c *Client) Analyze(a *Analysis, resultsContainer any) (*AnalysisResponseContainer, error) {
 	if a.Query.Tool == "" {
 		return nil, fmt.Errorf("query contained empty tool, tool is required for rendering results: %+v", a.Query)
 	}
@@ -203,7 +203,7 @@ func (c *Client) Analyze(a *Analysis, resultsContainer interface{}) (*AnalysisRe
 	if err != nil {
 		return nil, fmt.Errorf("tool '%s' unknown to api, cannot render", a.Query.Tool)
 	}
-	if reflect.PtrTo(reflect.TypeOf(requiredContainer)) != reflect.TypeOf(resultsContainer) {
+	if reflect.PointerTo(reflect.TypeOf(requiredContainer)) != reflect.TypeOf(resultsContainer) {
 		return nil, fmt.Errorf("expected output object type '%T', got '%T', cannot render", requiredContainer, resultsContainer)
 	}
 
@@ -222,7 +222,7 @@ func (c *Client) Analyze(a *Analysis, resultsContainer interface{}) (*AnalysisRe
 	return resp, nil
 }
 
-func (c *Client) vulnContainerForTool(tool string) (interface{}, error) {
+func (c *Client) vulnContainerForTool(tool string) (any, error) {
 	// Return an empty object of the appropriate type for comparisons or initialization.
 	switch tool {
 	case "sumip":

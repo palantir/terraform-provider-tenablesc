@@ -15,9 +15,9 @@ type CurrentUser struct {
 	Username     string   `json:"username,omitempty"`
 	AuthType     string   `json:"authType,omitempty"`
 	OrgName      string   `json:"orgName,omitempty"`
-	Organization BaseInfo `json:"organization,omitempty"`
-	Role         BaseInfo `json:"role,omitempty"`
-	Group        BaseInfo `json:"group,omitempty"`
+	Organization BaseInfo `json:"organization"`
+	Role         BaseInfo `json:"role"`
+	Group        BaseInfo `json:"group"`
 }
 
 func (c *Client) GetCurrentUser() (*CurrentUser, error) {

@@ -10,7 +10,7 @@ const pluginEndpoint = "/plugin"
 // Plugin represents the response structure for https://docs.tenable.com/tenablesc/api/Plugin.htm
 type Plugin struct {
 	BaseInfo
-	Family              Family         `json:"family,omitempty"`
+	Family              Family         `json:"family"`
 	CVSSV3BaseScore     string         `json:"cvssV3BaseScore,omitempty"`
 	CVSSV3TemporalScore string         `json:"cvssV3TemporalScore,omitempty"`
 	PluginPubDate       ProbablyString `json:"pluginPubDate,omitempty"`

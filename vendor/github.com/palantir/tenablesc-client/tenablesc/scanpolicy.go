@@ -16,7 +16,7 @@ type ScanPolicy struct {
 	ModifiedTime UnixEpochStringTime `json:"modifiedTime,omitempty"`
 	AuditFiles   []BaseInfo          `json:"auditFiles,omitempty"`
 	// Somtimes a map and sometimes an array :(
-	Preferences    interface{}          `json:"preferences,omitempty"`
+	Preferences    any                  `json:"preferences,omitempty"`
 	RemovePrefs    []string             `json:"removePrefs,omitempty"`
 	PolicyTemplate *BaseInfo            `json:"policyTemplate,omitempty"`
 	Owner          *UserInfo            `json:"owner,omitempty"`

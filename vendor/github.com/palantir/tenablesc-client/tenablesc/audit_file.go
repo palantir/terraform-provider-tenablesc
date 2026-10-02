@@ -29,7 +29,7 @@ type auditFileInternal struct {
 	AuditFile
 	TypeFields struct {
 		Variables []AuditVariable `json:"variables,omitempty"`
-	} `json:"typeFields,omitempty"`
+	} `json:"typeFields"`
 }
 
 func (a auditFileInternal) toExternal() *AuditFile {

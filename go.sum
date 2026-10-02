@@ -159,8 +159,8 @@ github.com/mitchellh/reflectwalk v1.0.2 h1:G2LzWKi524PWgd3mLHV8Y5k7s6XUvT0Gef6zx
 github.com/mitchellh/reflectwalk v1.0.2/go.mod h1:mSTlrgnPZtwu0c4WaC2kGObEpuNDbx0jmZXqmk4esnw=
 github.com/oklog/run v1.2.0 h1:O8x3yXwah4A73hJdlrwo/2X6J62gE5qTMusH0dvz60E=
 github.com/oklog/run v1.2.0/go.mod h1:mgDbKRSwPhJfesJ4PntqFUbKQRZ50NgmZTSPlFA0YFk=
-github.com/palantir/tenablesc-client v0.27.0 h1:M1pysvpMzb1KBiohcciRF7tSJEhF82rLQlTVw79C/Wk=
-github.com/palantir/tenablesc-client v0.27.0/go.mod h1:DnVphYP+nx8FiFb6d3tqI2Vvk2oStTYm8FR+KFwTXCI=
+github.com/palantir/tenablesc-client v0.27.1-0.20261002181000-76bba0f2623a h1:qrEwAIYuKbeoZB3K3FLBxl/zxbU1ymYmoDoTaCoV/Vs=
+github.com/palantir/tenablesc-client v0.27.1-0.20261002181000-76bba0f2623a/go.mod h1:6KHT9faUsDFwPpe/Efn2Fs2Jr4xh4+OTfS9GE6kgzr8=
 github.com/pjbgf/sha1cd v0.6.0 h1:3WJ8Wz8gvDz29quX1OcEmkAlUg9diU4GxJHqs0/XiwU=
 github.com/pjbgf/sha1cd v0.6.0/go.mod h1:lhpGlyHLpQZoxMv8HcgXvZEhcGs0PG/vsZnEJ7H0iCM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
