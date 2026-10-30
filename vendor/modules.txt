@@ -188,8 +188,8 @@ github.com/hashicorp/hcl/v2/internal/unicodeutil
 # github.com/hashicorp/logutils v1.0.0
 ## explicit
 github.com/hashicorp/logutils
-# github.com/hashicorp/terraform-exec v0.25.3
-## explicit; go 1.25.0
+# github.com/hashicorp/terraform-exec v0.26.0
+## explicit; go 1.26.0
 github.com/hashicorp/terraform-exec/internal/version
 github.com/hashicorp/terraform-exec/tfexec
 # github.com/hashicorp/terraform-json v0.29.0
